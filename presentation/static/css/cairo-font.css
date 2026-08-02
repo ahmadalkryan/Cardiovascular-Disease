@@ -1,0 +1,62 @@
+/* static/css/cairo-font.css */
+/* تحميل خط Cairo من Google Fonts ولكن مع تخزين مؤقت محلي */
+
+@font-face {
+  font-family: "Cairo";
+  font-style: normal;
+  font-weight: 400;
+  src:
+    local("Cairo Regular"),
+    local("Cairo-Regular"),
+    url("../fonts/cairo-v28-arabic-regular.woff2") format("woff2"),
+    url("../fonts/cairo-v28-arabic-regular.woff") format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cairo";
+  font-style: normal;
+  font-weight: 500;
+  src:
+    local("Cairo Medium"),
+    local("Cairo-Medium"),
+    url("../fonts/cairo-v28-arabic-500.woff2") format("woff2"),
+    url("../fonts/cairo-v28-arabic-500.woff") format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cairo";
+  font-style: normal;
+  font-weight: 600;
+  src:
+    local("Cairo SemiBold"),
+    local("Cairo-SemiBold"),
+    url("../fonts/cairo-v28-arabic-600.woff2") format("woff2"),
+    url("../fonts/cairo-v28-arabic-600.woff") format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cairo";
+  font-style: normal;
+  font-weight: 700;
+  src:
+    local("Cairo Bold"),
+    local("Cairo-Bold"),
+    url("../fonts/cairo-v28-arabic-700.woff2") format("woff2"),
+    url("../fonts/cairo-v28-arabic-700.woff") format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cairo";
+  font-style: normal;
+  font-weight: 800;
+  src:
+    local("Cairo ExtraBold"),
+    local("Cairo-ExtraBold"),
+    url("../fonts/cairo-v28-arabic-800.woff2") format("woff2"),
+    url("../fonts/cairo-v28-arabic-800.woff") format("woff");
+  font-display: swap;
+}

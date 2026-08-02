@@ -1,0 +1,487 @@
+{% extends "base.html" %} {% block title %}لوحة التحكم - الإحصائيات{% endblock
+%} {% block extra_css %}
+<style>
+  .stat-card {
+    background: white;
+    padding: 25px;
+    text-align: center;
+    border-radius: 20px;
+    transition: transform 0.3s;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .stat-number {
+    font-size: 36px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .chart-container {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  }
+
+  .table-container {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  }
+
+  .refresh-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s;
+    z-index: 1000;
+  }
+
+  .refresh-btn:hover {
+    transform: rotate(180deg);
+  }
+
+  .loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .error-message {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  .retry-btn {
+    margin-top: 10px;
+    padding: 5px 15px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .model-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 50px;
+    font-size: 11px;
+    font-weight: bold;
+  }
+
+  .model-minimal {
+    background: #3498db;
+    color: white;
+  }
+  .model-top8 {
+    background: #f39c12;
+    color: white;
+  }
+  .model-all11 {
+    background: #9b59b6;
+    color: white;
+  }
+</style>
+{% endblock %} {% block content %}
+<div class="container my-5">
+  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+    <h2>
+      <i class="fas fa-chart-line me-2" style="color: #667eea"></i>لوحة التحكم
+      والإحصائيات
+    </h2>
+    <div>
+      <a href="/" class="btn btn-outline-primary me-2">
+        <i class="fas fa-stethoscope"></i> تشخيص جديد
+      </a>
+      <a href="/patients" class="btn btn-outline-success">
+        <i class="fas fa-list"></i> قائمة المرضى
+      </a>
+    </div>
+  </div>
+
+  <div class="row g-4 mb-4" id="statsCards">
+    <div class="col-md-3">
+      <div class="stat-card" onclick="window.location.href = '/patients'">
+        <i class="fas fa-users fa-3x mb-3" style="color: #667eea"></i>
+        <div class="stat-number" id="totalPatients">0</div>
+        <div class="text-muted">إجمالي المرضى</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div
+        class="stat-card"
+        onclick="window.location.href = '/patients?model=all'"
+      >
+        <i class="fas fa-heartbeat fa-3x mb-3" style="color: #e74c3c"></i>
+        <div class="stat-number" id="diseaseCount">0</div>
+        <div class="text-muted">حالات مرضية</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div
+        class="stat-card"
+        onclick="window.location.href = '/patients?model=all'"
+      >
+        <i class="fas fa-smile fa-3x mb-3" style="color: #2ecc71"></i>
+        <div class="stat-number" id="healthyCount">0</div>
+        <div class="text-muted">حالات سليمة</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="stat-card">
+        <i class="fas fa-chart-simple fa-3x mb-3" style="color: #f39c12"></i>
+        <div class="stat-number" id="avgProbability">0%</div>
+        <div class="text-muted">متوسط نسبة الخطر</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="chart-container">
+        <h5 class="mb-3"><i class="fas fa-chart-pie me-2"></i>توزيع الحالات</h5>
+        <canvas id="statusChart" height="250"></canvas>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="chart-container">
+        <h5 class="mb-3">
+          <i class="fas fa-chart-bar me-2"></i>المرضى حسب النموذج
+        </h5>
+        <canvas id="modelChart" height="250"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-container mt-4">
+    <h5 class="mb-3"><i class="fas fa-table me-2"> </i>آخر 10 حالات مسجلة</h5>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>المعرف</th>
+            <th>التاريخ</th>
+            <th>الوقت</th>
+            <th>النتيجة</th>
+            <th>الاحتمالية</th>
+            <th>النموذج</th>
+          </tr>
+        </thead>
+        <tbody id="recentTableBody">
+          <tr>
+            <td colspan="6" class="text-center">
+              <div class="loading-spinner"></div>
+              <span class="ms-2">جاري تحميل البيانات...</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<button class="refresh-btn" onclick="loadDashboard()">
+  <i class="fas fa-sync-alt"></i>
+</button>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  let statusChart = null;
+  let modelChart = null;
+  let isLoading = false;
+
+  // ================================================
+  // أسماء النماذج الجديدة (محدثة)
+  // ================================================
+  const modelNames = {
+    minimal: "النموذج المبسط ",
+    top8: "النموذج المتوسط ",
+    all11: "النموذج الشامل ",
+  };
+
+  // ألوان النماذج الجديدة
+  const modelColors = {
+    minimal: "#3498db",
+    top8: "#f39c12",
+    all11: "#9b59b6",
+  };
+
+  // معلومات النماذج الجديدة
+  const modelDetails = {
+    minimal: {
+      icon: "⚡",
+      name: "المبسط",
+      features: "4 ميزات",
+      algo: "Logistic Regression",
+    },
+    top8: {
+      icon: "⭐",
+      name: "المتوسط",
+      features: "8 ميزات",
+      algo: "Random Forest",
+    },
+    all11: { icon: "🏆", name: "الشامل", features: "11 ميزة", algo: "KNN" },
+  };
+
+  // دالة عرض الإشعارات
+  function showNotification(message, type = "info") {
+    const toastElement = document.getElementById("notificationToast");
+    if (toastElement) {
+      const toastBody = document.getElementById("toastMessage");
+      const toastHeader = toastElement.querySelector(".toast-header");
+
+      if (toastBody) toastBody.textContent = message;
+
+      if (toastHeader) {
+        if (type === "success") {
+          toastHeader.style.background = "#2ecc71";
+          toastHeader.style.color = "white";
+        } else if (type === "error") {
+          toastHeader.style.background = "#e74c3c";
+          toastHeader.style.color = "white";
+        } else {
+          toastHeader.style.background = "#667eea";
+          toastHeader.style.color = "white";
+        }
+      }
+
+      try {
+        const bsToast = new bootstrap.Toast(toastElement);
+        bsToast.show();
+      } catch (e) {
+        console.log("Toast not available");
+      }
+    } else {
+      console.log(message);
+    }
+  }
+
+  async function loadDashboard() {
+    if (isLoading) return;
+    isLoading = true;
+
+    try {
+      // عرض حالة التحميل
+      document.getElementById("totalPatients").innerHTML =
+        '<div class="loading-spinner"></div>';
+      document.getElementById("diseaseCount").innerHTML =
+        '<div class="loading-spinner"></div>';
+      document.getElementById("healthyCount").innerHTML =
+        '<div class="loading-spinner"></div>';
+      document.getElementById("avgProbability").innerHTML =
+        '<div class="loading-spinner"></div>';
+
+      const response = await fetch("/api/statistics");
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (data.success) {
+        const stats = data.statistics;
+
+        // تحديث البطاقات
+        document.getElementById("totalPatients").innerText = stats.total || 0;
+        document.getElementById("diseaseCount").innerText = stats.disease || 0;
+        document.getElementById("healthyCount").innerText = stats.healthy || 0;
+        document.getElementById("avgProbability").innerHTML =
+          (stats.avg_probability || 0).toFixed(1) + "%";
+
+        // تحديث الرسم البياني للحالات
+        if (statusChart) statusChart.destroy();
+        const ctx1 = document.getElementById("statusChart").getContext("2d");
+        statusChart = new Chart(ctx1, {
+          type: "pie",
+          data: {
+            labels: [
+              `مرضى (${stats.disease || 0})`,
+              `أصحاء (${stats.healthy || 0})`,
+            ],
+            datasets: [
+              {
+                data: [stats.disease || 0, stats.healthy || 0],
+                backgroundColor: ["#e74c3c", "#2ecc71"],
+                borderWidth: 0,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+              legend: { position: "bottom" },
+              tooltip: {
+                callbacks: {
+                  label: function (context) {
+                    const total = (stats.disease || 0) + (stats.healthy || 0);
+                    const percentage =
+                      total > 0 ? ((context.raw / total) * 100).toFixed(1) : 0;
+                    return `${context.label}: ${context.raw} (${percentage}%)`;
+                  },
+                },
+              },
+            },
+          },
+        });
+
+        // تحديث الرسم البياني للنماذج (باستخدام الأسماء الجديدة)
+        if (modelChart) modelChart.destroy();
+        const ctx2 = document.getElementById("modelChart").getContext("2d");
+
+        // استخدام الأسماء الجديدة مع الألوان
+        const modelKeys = Object.keys(stats.by_model || {});
+        const modelLabels = modelKeys.map((m) => modelNames[m] || m);
+        const modelData = modelKeys.map((m) => stats.by_model[m] || 0);
+        const colors = modelKeys.map((m) => modelColors[m] || "#667eea");
+
+        modelChart = new Chart(ctx2, {
+          type: "bar",
+          data: {
+            labels: modelLabels,
+            datasets: [
+              {
+                label: "عدد الحالات",
+                data: modelData,
+                backgroundColor: colors,
+                borderRadius: 10,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: function (context) {
+                    const modelKey = modelKeys[context.dataIndex];
+                    const details = modelDetails[modelKey];
+                    if (details) {
+                      return `${context.raw} حالة (${details.features} - ${details.algo})`;
+                    }
+                    return `${context.raw} حالة`;
+                  },
+                },
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                title: { display: true, text: "عدد الحالات" },
+                ticks: { stepSize: 1 },
+              },
+            },
+          },
+        });
+
+        // آخر 10 حالات (مع أسماء النماذج الجديدة)
+        const tbody = document.getElementById("recentTableBody");
+        if (stats.recent && stats.recent.length > 0) {
+          tbody.innerHTML = stats.recent
+            .map((p) => {
+              const modelKey = p.model_used || "";
+              const modelDisplay = modelNames[modelKey] || modelKey || "-";
+              const modelBadge = modelKey
+                ? `<span class="model-badge model-${modelKey}">${modelDisplay}</span>`
+                : "-";
+
+              return `
+              <tr>
+                <td><code>${p.patient_id || "-"}</code></td>
+                <td>${p.date || "-"}</td>
+                <td>${p.time || "-"}</td>
+                <td><span class="badge ${p.prediction === 1 ? "bg-danger" : "bg-success"}">${p.result_ar || (p.prediction === 1 ? "مريض" : "سليم")}</span></td>
+                <td>${((p.probability || 0) * 100).toFixed(1)}%</td>
+                <td>${modelBadge}</td>
+              </tr>
+            `;
+            })
+            .join("");
+        } else {
+          tbody.innerHTML =
+            '<tr><td colspan="6" class="text-center">لا توجد بيانات بعد</td></tr>';
+        }
+
+        showNotification("تم تحديث البيانات بنجاح", "success");
+      } else {
+        throw new Error(data.error || "فشل في تحميل البيانات");
+      }
+    } catch (error) {
+      console.error("Error loading dashboard:", error);
+      showNotification("خطأ في تحميل البيانات: " + error.message, "error");
+
+      const tbody = document.getElementById("recentTableBody");
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="6" class="text-center">
+            <div class="error-message">
+              <i class="fas fa-exclamation-triangle fa-2x mb-2 d-block"></i>
+              <strong>خطأ في تحميل البيانات</strong>
+              <p class="small mb-2">${error.message}</p>
+              <button class="retry-btn" onclick="loadDashboard()">
+                <i class="fas fa-redo"></i> إعادة المحاولة
+              </button>
+            </div>
+          </td>
+        </tr>
+      `;
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  // تحميل البيانات أول مرة بعد التأكد من تحميل الصفحة
+  document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(loadDashboard, 500);
+  });
+
+  // تحديث تلقائي كل 30 ثانية
+  let autoRefreshInterval = setInterval(loadDashboard, 30000);
+
+  // إيقاف التحديث التلقائي عند مغادرة الصفحة
+  window.addEventListener("beforeunload", function () {
+    if (autoRefreshInterval) {
+      clearInterval(autoRefreshInterval);
+    }
+  });
+</script>
+{% endblock %}

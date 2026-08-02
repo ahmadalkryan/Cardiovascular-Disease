@@ -1,0 +1,536 @@
+{% extends "base.html" %} {% block title %}البيانات السريرية - نظام تشخيص أمراض
+القلب{% endblock %} {% block extra_css %}
+<style>
+  /* ============================================ */
+  /* أنماط صفحة البيانات السريرية */
+  /* ============================================ */
+
+  .clinical-hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    padding: 40px;
+    color: white;
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .clinical-hero::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.1) 0%,
+      transparent 60%
+    );
+    animation: rotate 20s linear infinite;
+  }
+
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .clinical-hero * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .clinical-hero .icon-circle {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 35px;
+  }
+
+  .method-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px 30px;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .method-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    transition: height 0.4s ease;
+  }
+
+  .method-card.form-card::before {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+  }
+
+  .method-card.file-card::before {
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+  }
+
+  .method-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .method-card:hover::before {
+    height: 100%;
+    opacity: 0.05;
+  }
+
+  .method-card .method-icon {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+    font-size: 45px;
+    transition: all 0.4s ease;
+  }
+
+  .method-card.form-card .method-icon {
+    background: linear-gradient(135deg, #667eea20, #764ba220);
+    color: #667eea;
+  }
+
+  .method-card.file-card .method-icon {
+    background: linear-gradient(135deg, #f39c1220, #e67e2220);
+    color: #f39c12;
+  }
+
+  .method-card:hover .method-icon {
+    transform: scale(1.1) rotate(-5deg);
+  }
+
+  .method-card h3 {
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #2c3e50;
+  }
+
+  .method-card p {
+    color: #6c757d;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  .method-card .btn-method {
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: 600;
+    border: none;
+    transition: all 0.3s;
+    font-size: 16px;
+  }
+
+  .method-card.form-card .btn-method {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+  }
+
+  .method-card.file-card .btn-method {
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+    color: white;
+  }
+
+  .method-card .btn-method:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .method-card .badge-recommended {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: #2ecc71;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .method-card .feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: right;
+    width: 100%;
+  }
+
+  .method-card .feature-list li {
+    padding: 8px 0;
+    color: #555;
+    font-size: 14px;
+  }
+
+  .method-card .feature-list li i {
+    margin-left: 8px;
+    color: #2ecc71;
+  }
+
+  .info-section {
+    background: #f8f9fa;
+    border-radius: 20px;
+    padding: 30px;
+    margin-top: 40px;
+  }
+
+  .info-section h4 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+  }
+
+  .info-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+
+  .info-card {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s;
+  }
+
+  .info-card:hover {
+    transform: translateY(-3px);
+  }
+
+  .info-card .info-icon {
+    font-size: 30px;
+    margin-bottom: 10px;
+  }
+
+  .info-card h6 {
+    font-weight: 600;
+    color: #2c3e50;
+  }
+
+  .info-card p {
+    font-size: 13px;
+    color: #6c757d;
+    margin: 0;
+  }
+
+  .divider-text {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 30px 0;
+    color: #6c757d;
+  }
+
+  .divider-text::before,
+  .divider-text::after {
+    content: "";
+    flex: 1;
+    border-bottom: 2px dashed #dee2e6;
+  }
+
+  .divider-text span {
+    padding: 0 20px;
+    font-weight: 600;
+    background: white;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .clinical-hero {
+      padding: 30px 20px;
+    }
+
+    .method-card {
+      padding: 30px 20px;
+    }
+
+    .method-card .method-icon {
+      width: 70px;
+      height: 70px;
+      font-size: 30px;
+    }
+
+    .info-cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+{% endblock %} {% block content %}
+<div class="container my-5">
+  <!-- ============================================ -->
+  <!-- Hero Section -->
+  <!-- ============================================ -->
+  <div class="clinical-hero" data-aos="fade-down">
+    <div class="icon-circle">
+      <i class="fas fa-notes-medical"></i>
+    </div>
+    <h1 class="fw-bold mb-3">البيانات السريرية</h1>
+    <p class="lead mb-0">
+      اختر الطريقة المناسبة لإدخال البيانات السريرية للمريض
+    </p>
+    <p class="mt-2 opacity-75">
+      يمكنك إدخال البيانات تعبئة نموذج أو رفع ملف Excel/CSV للتنبؤ الجماعي
+    </p>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- Selection Methods -->
+  <!-- ============================================ -->
+  <div class="row g-4" data-aos="fade-up" data-aos-delay="200">
+    <!-- الطريقة الأولى: الفورم اليدوي -->
+    <div class="col-lg-6">
+      <div
+        class="method-card form-card"
+        onclick="window.location.href = '/diagnosis'"
+      >
+        <span class="badge-recommended">
+          <i class="fas fa-star me-1"></i> موصى به
+        </span>
+        <div class="method-icon">
+          <i class="fas fa-keyboard"></i>
+        </div>
+        <h3>
+          <i class="fas fa-pen-to-square me-2"></i>
+          تعبئة قالب
+        </h3>
+        <p>
+          قم بإدخال بيانات مريض واحد يدوياً من خلال نموذج تفاعلي سهل الاستخدام
+          مع تفسير فوري من الذكاء الاصطناعي
+        </p>
+
+        <ul class="feature-list mb-4">
+          <li>
+            <i class="fas fa-check-circle"></i>
+            إدخال بيانات مريض واحد
+          </li>
+          <li>
+            <i class="fas fa-check-circle"></i>
+            نتيجة فورية
+          </li>
+          <li>
+            <i class="fas fa-check-circle"></i>
+            إمكانية تعديل التشخيص النهائي
+          </li>
+          <li>
+            <i class="fas fa-check-circle"></i>
+            اختيار بين 3 نماذج ذكاء صنعي
+          </li>
+          <li>
+            <i class="fas fa-check-circle"></i>
+            حفظ البيانات
+          </li>
+        </ul>
+
+        <button class="btn-method" onclick="window.location.href = '/'">
+          <i class="fas fa-stethoscope me-2"></i>
+          بدء التشخيص الفردي
+        </button>
+      </div>
+    </div>
+
+    <!-- الطريقة الثانية: رفع ملف -->
+    <div class="col-lg-6">
+      <div
+        class="method-card file-card"
+        onclick="window.location.href = '/batch-predict'"
+      >
+        <div class="method-icon">
+          <i class="fas fa-file-csv"></i>
+        </div>
+        <h3>
+          <i class="fas fa-upload me-2"></i>
+          رفع ملف للبيانات السريرية
+        </h3>
+        <p>
+          قم برفع ملف Excel أو CSV يحتوي على بيانات مرضى للتنبؤ الجماعي ومعالجة
+          الحالات دفعة واحدة
+        </p>
+
+        <ul class="feature-list mb-4">
+          <li>
+            <i class="fas fa-check-circle"></i>
+            دعم ملفات CSV و Excel
+          </li>
+          <li>
+            <i class="fas fa-check-circle"></i>
+            تحميل قالب جاهز للتعبئة
+          </li>
+          <li>
+            <i class="fas fa-check-circle"></i>
+            نتائج جماعية مع إحصائيات
+          </li>
+          <li>
+            <i class="fas fa-check-circle"></i>
+            تحميل النتائج كملف CSV
+          </li>
+          <li>
+            <i class="fas fa-check-circle"></i>
+            معالجة عدة مرضى معا
+          </li>
+        </ul>
+
+        <button
+          class="btn-method"
+          onclick="window.location.href = '/batch-predict'"
+        >
+          <i class="fas fa-cloud-upload-alt me-2"></i>
+          رفع ملف والتنبؤ الجماعي
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- Divider -->
+  <!-- ============================================ -->
+  <div class="divider-text" data-aos="fade-up">
+    <span>
+      <i class="fas fa-info-circle me-2"></i>
+      معلومات مهمة قبل البدء
+    </span>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- Information Cards -->
+  <!-- ============================================ -->
+  <div class="info-section" data-aos="fade-up" data-aos-delay="400">
+    <h4 class="text-center">
+      <i class="fas fa-lightbulb me-2" style="color: #f39c12"></i>
+      ما الذي تحتاج معرفته؟
+    </h4>
+
+    <div class="info-cards">
+      <!-- البيانات المطلوبة -->
+      <div class="info-card">
+        <div class="info-icon">📋</div>
+        <h6>البيانات المطلوبة</h6>
+        <p>
+          تختلف الميزات المطلوبة حسب النموذج المختار (4 أو 8 أو 11 ميزة سريرية)
+        </p>
+      </div>
+
+      <!-- دقة النماذج -->
+      <div class="info-card">
+        <div class="info-icon">🎯</div>
+        <h6>دقة النماذج</h6>
+        <p>نماذجنا تحقق دقة عالية باستخدام أحدث تقنيات التعلم الآلي</p>
+      </div>
+
+      <!-- تنسيق الملفات -->
+      <div class="info-card">
+        <div class="info-icon">📁</div>
+        <h6>تنسيق الملفات</h6>
+        <p>
+          للملفات: يجب أن تحتوي على أعمدة بأسماء الميزات الإنجليزية المطلوبة
+        </p>
+      </div>
+
+      <!-- تنبيه طبي -->
+      <div class="info-card">
+        <div class="info-icon">⚠️</div>
+        <h6>تنبيه طبي</h6>
+        <p>هذه الأداة مساعدة فقط ولا تغني عن مراجعة و قرار الطبيب</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- Quick Actions -->
+  <!-- ============================================ -->
+  <div class="text-center mt-5" data-aos="fade-up" data-aos-delay="600">
+    <div class="d-flex justify-content-center gap-3 flex-wrap">
+      <a href="/diagnosis" class="btn btn-primary btn-lg px-4">
+        <i class="fas fa-stethoscope me-2"></i>
+        تشخيص سريع
+      </a>
+      <a href="/batch-predict" class="btn btn-warning btn-lg px-4 text-white">
+        <i class="fas fa-upload me-2"></i>
+        تنبؤ جماعي
+      </a>
+      <a href="/dashboard" class="btn btn-outline-info btn-lg px-4">
+        <i class="fas fa-chart-line me-2"></i>
+        لوحة التحكم
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %} {% block extra_js %}
+<script>
+  // ================================================
+  // تحسين تجربة المستخدم
+  // ================================================
+
+  document.addEventListener("DOMContentLoaded", function () {
+    // إضافة تأثيرات تفاعلية للبطاقات
+    const methodCards = document.querySelectorAll(".method-card");
+
+    methodCards.forEach((card) => {
+      card.addEventListener("mouseenter", function () {
+        const icon = this.querySelector(".method-icon");
+        if (icon) {
+          icon.style.transform = "scale(1.1) rotate(-5deg)";
+        }
+      });
+
+      card.addEventListener("mouseleave", function () {
+        const icon = this.querySelector(".method-icon");
+        if (icon) {
+          icon.style.transform = "scale(1) rotate(0deg)";
+        }
+      });
+    });
+
+    // عرض إشعار ترحيبي
+    setTimeout(() => {
+      showNotification("👋 مرحباً! اختر طريقة إدخال البيانات المناسبة", "info");
+    }, 1000);
+  });
+
+  // التحقق من حالة الخادم
+  async function checkServerStatus() {
+    try {
+      const response = await fetch("/api/ai-status");
+      if (response.ok) {
+        const data = await response.json();
+        if (data.ai_available) {
+          console.log("✅ نظام AI جاهز للعمل");
+        }
+      }
+    } catch (error) {
+      console.log("⚠️ جاري الاتصال بالخادم...");
+    }
+  }
+
+  // تشغيل فحص الخادم
+  setTimeout(checkServerStatus, 500);
+</script>
+{% endblock %}

@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{{ template_title }} - تقرير طبي</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap");
+
+      * {
+        font-family: "Cairo", sans-serif;
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        background: white;
+        color: #2c3e50;
+        line-height: 1.8;
+      }
+
+      .pdf-report {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px;
+      }
+
+      /* Header */
+      .report-header {
+        text-align: center;
+        border-bottom: 3px solid #667eea;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+
+      .report-header .logo {
+        font-size: 24px;
+        font-weight: 800;
+        color: #667eea;
+        margin-bottom: 10px;
+      }
+
+      .report-header h1 {
+        color: #667eea;
+        font-size: 26px;
+        font-weight: 800;
+        margin: 10px 0 5px;
+      }
+
+      .report-header .report-meta {
+        color: #888;
+        font-size: 12px;
+        margin-top: 8px;
+      }
+
+      .report-header .report-meta span {
+        margin: 0 15px;
+      }
+
+      /* Sections */
+      .report-section {
+        margin-bottom: 25px;
+        page-break-inside: avoid;
+      }
+
+      .report-section h4 {
+        color: #667eea;
+        border-bottom: 1px solid #e0e0e0;
+        padding-bottom: 8px;
+        margin-bottom: 15px;
+        font-size: 16px;
+      }
+
+      /* Field Rows */
+      .field-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px dotted #eee;
+      }
+
+      .field-label {
+        font-weight: 600;
+        color: #555;
+        flex: 1;
+        font-size: 13px;
+      }
+
+      .field-value {
+        color: #2c3e50;
+        flex: 2;
+        text-align: left;
+        font-size: 14px;
+        word-break: break-word;
+      }
+
+      .field-value.highlight {
+        color: #667eea;
+        font-weight: 700;
+        font-size: 16px;
+      }
+
+      .field-value.danger {
+        color: #e74c3c;
+        font-weight: 700;
+      }
+
+      .field-value.success {
+        color: #2ecc71;
+        font-weight: 700;
+      }
+
+      /* Footer */
+      .report-footer {
+        margin-top: 50px;
+        padding-top: 20px;
+        border-top: 1px solid #e0e0e0;
+        text-align: center;
+        color: #888;
+        font-size: 11px;
+      }
+
+      .report-footer .signature-section {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 40px;
+      }
+
+      .report-footer .signature-box {
+        text-align: center;
+        width: 200px;
+      }
+
+      .report-footer .signature-line {
+        border-bottom: 1px solid #333;
+        margin: 40px 0 10px;
+      }
+
+      /* Print Optimization */
+      @media print {
+        body {
+          background: white;
+        }
+        .pdf-report {
+          padding: 20px;
+          box-shadow: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="pdf-report">
+      <!-- Header -->
+      <div class="report-header">
+        <div class="logo">🏥 مساعد طبيب قلبية</div>
+        <h1>{{ template_title }}</h1>
+        <div class="report-meta">
+          {% if patient_id %}
+          <span>📋 معرف المريض: {{ patient_id }}</span>
+          {% endif %}
+          <span>📅 التاريخ: {{ report_date }}</span>
+        </div>
+      </div>
+
+      <!-- Dynamic Fields -->
+      {% for field in structure %} {% if field.type == 'heading' %}
+      <div class="report-section">
+        <h4>{{ field.label }}</h4>
+      </div>
+
+      {% elif field.type == 'divider' %}
+      <hr style="border: none; border-top: 1px dashed #ddd; margin: 20px 0" />
+
+      {% elif field.type == 'checkbox' %}
+      <div class="field-row">
+        <span class="field-label">{{ field.label }}</span>
+        <span
+          class="field-value {{ 'success' if data.get(field.name) else 'danger' }}"
+        >
+          {{ '✅ نعم' if data.get(field.name) else '❌ لا' }}
+        </span>
+      </div>
+
+      {% else %}
+      <div class="field-row">
+        <span class="field-label">{{ field.label }}</span>
+        <span
+          class="field-value {% if field.name in ['diagnosis', 'result'] %}highlight{% endif %}"
+        >
+          {{ data.get(field.name, '-') }}
+        </span>
+      </div>
+
+      {% endif %} {% endfor %}
+
+      <!-- Footer -->
+      <div class="report-footer">
+        <div class="signature-section">
+          <div class="signature-box">
+            <div class="signature-line"></div>
+            <small>توقيع الطبيب</small>
+          </div>
+          <div class="signature-box">
+            <div class="signature-line"></div>
+            <small>ختم المؤسسة</small>
+          </div>
+        </div>
+        <p style="margin-top: 30px">
+          تم إنشاء هذا التقرير بواسطة نظام مساعد طبيب قلبية - {{ report_date }}
+        </p>
+        <p>© 2026 جميع الحقوق محفوظة</p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,296 @@
+{% extends "base.html" %} {% block title %}محرر القوالب الطبية - مساعد طبيب
+قلبية{% endblock %} {% block extra_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/reports.css') }}"
+/>
+<style>
+  .field-properties {
+    display: none;
+    margin-top: 10px;
+    padding: 12px;
+    background: #f8f9fc;
+    border-radius: 8px;
+  }
+  .field-properties.active {
+    display: block;
+  }
+  .field-item.selected {
+    border-color: #667eea !important;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+  }
+  .option-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    background: #667eea15;
+    border-radius: 20px;
+    margin: 2px;
+    font-size: 12px;
+  }
+  .option-chip .remove-option {
+    cursor: pointer;
+    color: #e74c3c;
+    font-weight: bold;
+  }
+</style>
+{% endblock %} {% block content %}
+<div class="container-fluid my-4">
+  <div class="d-flex justify-content-between align-items-center mb-3 px-3">
+    <div>
+      <h3 class="fw-bold mb-0">
+        <i class="fas fa-file-medical me-2" style="color: #667eea"></i>محرر
+        القوالب الطبية {% if edit_template %}<small class="text-muted fs-6"
+          >(تعديل)</small
+        >{% endif %}
+      </h3>
+      <small class="text-muted"
+        >قم بسحب وإفلات الحقول لبناء قالب التقرير الطبي</small
+      >
+    </div>
+    <div class="d-flex gap-2">
+      <a
+        href="/reports"
+        class="btn btn-outline-secondary"
+        onclick="return confirmExit();"
+      >
+        <i class="fas fa-arrow-right me-1"></i> رجوع
+      </a>
+      <button class="btn btn-outline-secondary" onclick="previewTemplate()">
+        <i class="fas fa-eye me-1"></i> معاينة
+      </button>
+      <button class="btn btn-primary px-4" onclick="saveTemplate()">
+        <i class="fas fa-save me-1"></i> حفظ القالب
+      </button>
+    </div>
+  </div>
+
+  <div class="builder-container">
+    <div class="field-palette">
+      <h6><i class="fas fa-plus-circle me-1"></i> إضافة حقل</h6>
+      <div class="field-type-group">
+        <div class="group-label">أساسي</div>
+        {% for ft in field_types %}{% if ft.category == 'basic' %}
+        <button class="field-type-btn" onclick="addField('{{ ft.type }}')">
+          <i class="fas {{ ft.icon }}"></i> {{ ft.label }}
+        </button>
+        {% endif %}{% endfor %}
+      </div>
+      <div class="field-type-group">
+        <div class="group-label">اختيارات</div>
+        {% for ft in field_types %}{% if ft.category == 'choice' %}
+        <button class="field-type-btn" onclick="addField('{{ ft.type }}')">
+          <i class="fas {{ ft.icon }}"></i> {{ ft.label }}
+        </button>
+        {% endif %}{% endfor %}
+      </div>
+      <div class="field-type-group">
+        <div class="group-label">تخطيط</div>
+        {% for ft in field_types %}{% if ft.category == 'layout' %}
+        <button class="field-type-btn" onclick="addField('{{ ft.type }}')">
+          <i class="fas {{ ft.icon }}"></i> {{ ft.label }}
+        </button>
+        {% endif %}{% endfor %}
+      </div>
+      <hr class="my-3" />
+      <div class="mb-2">
+        <label class="form-label fw-bold small mb-1">اسم القالب</label
+        ><input
+          type="text"
+          id="templateTitle"
+          class="form-control form-control-sm"
+          placeholder="مثال: تقرير فحص قلب"
+        />
+      </div>
+      <div class="mb-2">
+        <label class="form-label fw-bold small mb-1">الوصف</label
+        ><input
+          type="text"
+          id="templateDescription"
+          class="form-control form-control-sm"
+          placeholder="وصف مختصر"
+        />
+      </div>
+      <div>
+        <label class="form-label fw-bold small mb-1">الفئة</label
+        ><select id="templateCategory" class="form-select form-select-sm">
+          <option value="general">عام</option>
+          <option value="cardiology">قلبية</option>
+          <option value="surgery">جراحة</option>
+          <option value="laboratory">مخبرية</option>
+        </select>
+      </div>
+    </div>
+
+    <div>
+      <div class="builder-canvas" id="templateCanvas">
+        <div class="canvas-empty">
+          <i class="fas fa-arrow-left fa-3x mb-3" style="color: #ccc"></i>
+          <p>أضف حقولاً من القائمة الجانبية لبناء القالب</p>
+        </div>
+      </div>
+
+      <div
+        class="card shadow-sm mt-3"
+        id="propertiesPanel"
+        style="display: none"
+      >
+        <div
+          class="card-header bg-light d-flex justify-content-between align-items-center"
+        >
+          <h6 class="mb-0">
+            <i class="fas fa-sliders-h me-1"></i> خصائص الحقل
+          </h6>
+          <button
+            class="btn btn-sm btn-outline-danger"
+            onclick="deleteSelectedField()"
+          >
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+        <div class="card-body">
+          <input type="hidden" id="selectedFieldIndex" value="-1" />
+          <div class="row g-2">
+            <div class="col-6">
+              <label class="form-label small fw-bold">اسم الحقل (تقني)</label
+              ><input
+                type="text"
+                id="propName"
+                class="form-control form-control-sm"
+                onchange="applyProperty('name', this.value)"
+              />
+            </div>
+            <div class="col-6">
+              <label class="form-label small fw-bold">العنوان المعروض</label
+              ><input
+                type="text"
+                id="propLabel"
+                class="form-control form-control-sm"
+                onchange="applyProperty('label', this.value)"
+              />
+            </div>
+            <div class="col-6">
+              <label class="form-label small fw-bold">نص مساعد</label
+              ><input
+                type="text"
+                id="propPlaceholder"
+                class="form-control form-control-sm"
+                onchange="applyProperty('placeholder', this.value)"
+              />
+            </div>
+            <div class="col-6 d-flex align-items-end">
+              <div class="form-check">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  id="propRequired"
+                  onchange="applyProperty('required', this.checked)"
+                /><label class="form-check-label small fw-bold">مطلوب</label>
+              </div>
+            </div>
+          </div>
+          <div id="optionsSection" style="display: none" class="mt-2">
+            <label class="form-label small fw-bold">الخيارات</label>
+            <div class="input-group input-group-sm">
+              <input
+                type="text"
+                id="newOption"
+                class="form-control"
+                placeholder="أضف خياراً"
+              /><button class="btn btn-outline-primary" onclick="addOption()">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+            <div id="optionsList" class="mt-2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Preview Modal -->
+<div class="modal fade" id="previewModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header" style="background: #1a5276; color: white">
+        <h5 class="modal-title">
+          <i class="fas fa-eye me-2"></i>معاينة القالب
+        </h5>
+        <button
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body" id="previewContent"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Delete Modal -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content border-0 shadow" style="border-radius: 16px">
+      <div
+        class="modal-header bg-danger text-white"
+        style="border-radius: 16px 16px 0 0"
+      >
+        <h6 class="modal-title">
+          <i class="fas fa-exclamation-triangle me-2"></i>تأكيد الحذف
+        </h6>
+        <button
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body text-center py-4">
+        <p class="mb-0">هل أنت متأكد من حذف هذا الحقل؟</p>
+        <small class="text-muted">لا يمكن التراجع عن هذا الإجراء</small>
+      </div>
+      <div class="modal-footer border-0 justify-content-center">
+        <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+          إلغاء
+        </button>
+        <button class="btn btn-danger btn-sm" id="confirmDeleteBtn">حذف</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Exit Modal (عند الرجوع بدون حفظ) -->
+<div class="modal fade" id="confirmExitModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content border-0 shadow" style="border-radius: 16px">
+      <div
+        class="modal-header bg-warning text-dark"
+        style="border-radius: 16px 16px 0 0"
+      >
+        <h6 class="modal-title">
+          <i class="fas fa-exclamation-triangle me-2"></i>تغييرات غير محفوظة
+        </h6>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body text-center py-4">
+        <p class="mb-0">لديك تغييرات غير محفوظة. هل تريد المغادرة؟</p>
+        <small class="text-muted">سيتم فقدان جميع التغييرات</small>
+      </div>
+      <div class="modal-footer border-0 justify-content-center">
+        <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+          البقاء
+        </button>
+        <button class="btn btn-warning btn-sm" id="confirmExitBtn">
+          مغادرة بدون حفظ
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} {% block extra_js %}
+<script>
+  {% if edit_template %}
+  window.EDIT_TEMPLATE = {{ edit_template|tojson }};
+  {% endif %}
+</script>
+<script src="{{ url_for('static', filename='js/template_builder.js') }}"></script>
+{% endblock %}
