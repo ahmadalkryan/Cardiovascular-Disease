@@ -1,0 +1,7 @@
+FEATURES FOR Set6_Minimal - Logistic Regression
+==================================================
+
+1. ST slope
+2. exercise angina
+3. chest pain type
+4. oldpeak

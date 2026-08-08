@@ -1,0 +1,14 @@
+FEATURES FOR Set4_All_11 - KNN
+==================================================
+
+1. age
+2. sex
+3. chest pain type
+4. resting bp s
+5. cholesterol
+6. fasting blood sugar
+7. resting ecg
+8. max heart rate
+9. exercise angina
+10. oldpeak
+11. ST slope

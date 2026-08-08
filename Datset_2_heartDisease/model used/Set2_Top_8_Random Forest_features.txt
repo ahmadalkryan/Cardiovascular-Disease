@@ -1,0 +1,11 @@
+FEATURES FOR Set2_Top_8 - Random Forest
+==================================================
+
+1. ST slope
+2. chest pain type
+3. exercise angina
+4. oldpeak
+5. max heart rate
+6. sex
+7. fasting blood sugar
+8. cholesterol
