@@ -36,3 +36,28 @@ Link To  Models https://drive.google.com/drive/folders/1Mgve4IwWW5iGVs87ZnW3bW6q
 </p>
 
 يتبع المشروع **الهندسة ثلاثية الطبقات (3-Tier Architecture)** مع طبقة رابعة للبنية التحتية:
+HEART_FLASK/
+├── application/          # طبقة التطبيق (المسارات وواجهات API)
+│   ├── routes/          # مسارات API وصفحات HTML
+│   ├── exceptions/      # استثناءات مخصصة للتطبيق
+│   └── dtos/            # كائنات نقل البيانات
+│
+├── business/            # طبقة الأعمال (المنطق والخدمات)
+│   ├── services/        # الخدمات الأساسية
+│   ├── strategies/      # استراتيجيات التنبؤ
+│   ├── factories/       # مصانع الكائنات
+│   └── config/          # إعدادات الأعمال
+│
+├── infrastructure/      # طبقة البنية التحتية
+│   ├── models/          # نماذج قاعدة البيانات
+│   ├── repositories/    # مستودعات البيانات
+│   ├── logs/            # سجلات التطبيق
+│   └── presentation/    # واجهة المستخدم (HTML, CSS, JS)
+│
+├── storage/             # التخزين
+│   ├── data/            # بيانات المرضى (CSV)
+│   ├── models/          # نماذج الذكاء الاصطناعي
+│   ├── uploads/         # الملفات المرفوعة
+│   └── reports/         # تقارير PDF
+│
+└── tests/               # الاختبارات
