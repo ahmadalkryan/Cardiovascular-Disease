@@ -111,4 +111,3 @@ pip install -r requirements.txt
 python app.py
 </p>
 
-يتبع المشروع **الهندسة ثلاثية الطبقات (3-Tier Architecture)** مع طبقة رابعة للبنية التحتية
