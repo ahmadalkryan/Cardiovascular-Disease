@@ -100,7 +100,7 @@
    ```bash
    python app.py
    ```
-   * افتح متصفح الويب وانتقل إلى الرابط المحلي: `http://127.0.0.1:5000`
+
 
 ---
 ## 🏗️ الهندسة المعمارية
@@ -131,7 +131,7 @@ HEART_FLASK/
 ├── 📁 infrastructure/      # 🏛️ طبقة البنية التحتية (Infrastructure Layer)
 │   ├── 📁 models/          # نماذج وجداول قاعدة البيانات (ORM Models)
 │   ├── 📁 repositories/    # مستودعات الوصول إلى البيانات (Repository Pattern)
-│   └── 📁 logs/            # ملفات سجلات النظام والتتبع
+│── 📁 logs/            # ملفات سجلات النظام والتتبع
 │
 ├── 📁 presentation/        # 🎨 طبقة العرض والواجهات (Presentation Layer)
 │   ├── 📁 static/          # الملفات الثابتة (CSS, JS, Images)
