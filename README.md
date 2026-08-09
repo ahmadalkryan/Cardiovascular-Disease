@@ -31,40 +31,85 @@
 
 ## 🏗️ الهندسة المعمارية
 
+# 🫀 HEART_FLASK Project
+
+مشروع متكامل للتنبؤ بأمراض القلب وتحليل البيانات باستخدام إطار العمل **Flask** وبتصميم معماري يعتمد على فصل الطبقات (Layered Architecture).
+
+## 📁 هيكلية المشروع (Project Architecture)
+
+```text
 HEART_FLASK/
-├── 📄 app.py               # نقطة الدخول الرئيسية
-├── 📄 config.py            # إعدادات التطبيق
-├── 📄 requirements.txt     # المتطلبات والمكتبات
-├── 📄 .env                 # متغيرات البيئة
-├── 📄 .gitignore           # ملفات تجاهل Git
 │
-├── 📁 application/         # 🎯 طبقة التطبيق (Controller)
-│   ├── 📁 dtos/            # كائنات نقل البيانات
-│   ├── 📁 exceptions/      # معالجة الاستثناءات
-│   └── 📁 routes/          # المسارات (API Endpoints)
+├── 📄 app.py               # نقطة الدخول الرئيسية للتطبيق (Main Entry Point)
+├── 📄 config.py            # إعدادات التطبيق العامة
+├── 📄 requirements.txt     # المكتبات والمتطلبات اللازمة للتشغيل
+├── 📄 .env                 # متغيرات البيئة السرية (Environment Variables)
+├── 📄 .gitignore           # الملفات والمجلدات المتجاهلة في Git
 │
-├── 📁 business/            # 💼 طبقة الأعمال (Business Logic)
-│   ├── 📁 config/          # إعدادات الأعمال
-│   ├── 📁 factories/       # مصانع الكائنات
-│   ├── 📁 services/        # الخدمات
-│   └── 📁 strategies/      # استراتيجيات التنبؤ
+├── 📁 application/         # 🎯 طبقة التطبيق (Controller Layer)
+│   ├── 📁 dtos/            # كائنات نقل البيانات (Data Transfer Objects)
+│   ├── 📁 exceptions/      # معالجة الاستثناءات والأخطاء المخصصة
+│   └── 📁 routes/          # مسارات وإشارات التطبيق (API Endpoints)
 │
-├── 📁 infrastructure/      # 🏛️ طبقة البنية التحتية
-│   ├── 📁 models/          # نماذج قاعدة البيانات
-│   ├── 📁 repositories/    # وصول إلى البيانات
-│   └── 📁 logs/            # سجلات التطبيق
+├── 📁 business/            # 💼 طبقة الأعمال المنطقية (Business Logic Layer)
+│   ├── 📁 config/          # إعدادات منطق الأعمال
+│   ├── 📁 factories/       # مصانع إنشاء الكائنات (Factory Pattern)
+│   ├── 📁 services/        # الخدمات البرمجية الأساسية
+│   └── 📁 strategies/      # استراتيجيات وخوارزميات التنبؤ (Strategy Pattern)
 │
-├── 📁 presentation/        # 🎨 طبقة العرض (Frontend)
-│   ├── 📁 static/          # ملفات ثابتة (CSS, JS, Images)
-│   └── 📁 templates/       # قوالب HTML
+├── 📁 infrastructure/      # 🏛️ طبقة البنية التحتية (Infrastructure Layer)
+│   ├── 📁 models/          # نماذج وجداول قاعدة البيانات (ORM Models)
+│   ├── 📁 repositories/    # مستودعات الوصول إلى البيانات (Repository Pattern)
+│   └── 📁 logs/            # ملفات سجلات النظام والتتبع
 │
-├── 📁 storage/             # 💾 التخزين
-│   ├── 📁 data/            # بيانات CSV
-│   ├── 📁 models/          # نماذج ML
-│   ├── 📁 uploads/         # ملفات مرفوعة
-│   └── 📁 reports/         # تقارير PDF
+├── 📁 presentation/        # 🎨 طبقة العرض والواجهات (Presentation Layer)
+│   ├── 📁 static/          # الملفات الثابتة (CSS, JS, Images)
+│   └── 📁 templates/       # قوالب العرض (HTML Templates / Jinja2)
 │
-└── 📁 tests/               # 🧪 الاختبارات
+├── 📁 storage/             # 💾 طبقة التخزين والبيانات (Storage & Data)
+│   ├── 📁 data/            # ملفات البيانات الخام والمُعالجة (CSV Files)
+│   ├── 📁 models/          # نماذج ذكاء الآلة المدربة وجاهزة للاستخدام (ML Models)
+│   ├── 📁 uploads/         # الملفات والمستندات المرفوعة من قبل المستخدمين
+│   └── 📁 reports/         # التقارير الطبية والإحصائية الصادرة (PDF Reports)
+│
+└── 📁 tests/               # 🧪 طبقة الاختبارات (Unit & Integration Tests)
+```
+
+## 🚀 البدء بالعمل (Getting Started)
+
+### 1. المتطلبات الأساسية
+تأكد من تثبيت بيئة عمل Python (الإصدار 3.8 أو أحدث).
+
+### 2. تثبيت المشروع محلياً
+قم بإنشاء بيئة افتراضية وتثبيت المكتبات المطلوبة عبر تشغيل الأوامر التالية:
+
+```bash
+# إنشاء بيئة افتراضية
+python -m venv venv
+
+# تفعيل البيئة الافتراضية (Windows)
+venv\Scripts\activate
+
+# تفعيل البيئة الافتراضية (Mac/Linux)
+source venv/bin/activate
+
+# تثبيت المكتبات
+pip install -r requirements.txt
+```
+
+### 3. إعداد متغيرات البيئة
+قم بإنشاء ملف `.env` في المجلد الرئيسي وإضافة المتغيرات الأساسية مثل:
+```env
+FLASK_APP=app.py
+FLASK_ENV=development
+SECRET_KEY=your_secret_key_here
+```
+
+### 4. تشغيل التطبيق
+```bash
+flask run
+```
+
 
 ## 🚀 البدء السريع
 
