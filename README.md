@@ -31,14 +31,40 @@
 
 ## 🏗️ الهندسة المعمارية
 
-| الطبقة | الدور | المكونات الرئيسية |
-|--------|-------|-------------------|
-| **🎨 طبقة العرض (Presentation)** | واجهة المستخدم | HTML, CSS, JavaScript, قوالب Jinja2 |
-| **🎯 طبقة التطبيق (Application)** | استقبال الطلبات وتوجيهها | Routes (المسارات)، DTOs، معالجة الاستثناءات |
-| **💼 طبقة الأعمال (Business)** | منطق الأعمال والخدمات | Services، Strategies، Factories |
-| **🏛️ طبقة البنية التحتية (Infrastructure)** | البنية الأساسية | Database Models، Repositories، Logging |
-
----
+HEART_FLASK/
+├── 📄 app.py               # نقطة الدخول الرئيسية
+├── 📄 config.py            # إعدادات التطبيق
+├── 📄 requirements.txt     # المتطلبات والمكتبات
+├── 📄 .env                 # متغيرات البيئة
+├── 📄 .gitignore           # ملفات تجاهل Git
+│
+├── 📁 application/         # 🎯 طبقة التطبيق (Controller)
+│   ├── 📁 dtos/            # كائنات نقل البيانات
+│   ├── 📁 exceptions/      # معالجة الاستثناءات
+│   └── 📁 routes/          # المسارات (API Endpoints)
+│
+├── 📁 business/            # 💼 طبقة الأعمال (Business Logic)
+│   ├── 📁 config/          # إعدادات الأعمال
+│   ├── 📁 factories/       # مصانع الكائنات
+│   ├── 📁 services/        # الخدمات
+│   └── 📁 strategies/      # استراتيجيات التنبؤ
+│
+├── 📁 infrastructure/      # 🏛️ طبقة البنية التحتية
+│   ├── 📁 models/          # نماذج قاعدة البيانات
+│   ├── 📁 repositories/    # وصول إلى البيانات
+│   └── 📁 logs/            # سجلات التطبيق
+│
+├── 📁 presentation/        # 🎨 طبقة العرض (Frontend)
+│   ├── 📁 static/          # ملفات ثابتة (CSS, JS, Images)
+│   └── 📁 templates/       # قوالب HTML
+│
+├── 📁 storage/             # 💾 التخزين
+│   ├── 📁 data/            # بيانات CSV
+│   ├── 📁 models/          # نماذج ML
+│   ├── 📁 uploads/         # ملفات مرفوعة
+│   └── 📁 reports/         # تقارير PDF
+│
+└── 📁 tests/               # 🧪 الاختبارات
 
 ## 🚀 البدء السريع
 
