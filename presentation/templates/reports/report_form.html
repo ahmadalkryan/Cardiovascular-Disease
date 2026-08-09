@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+
+{% block title %}تعبئة تقرير - {{ template.title }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/reports.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
+    <div>
+      <h2>
+        <i class="fas fa-file-medical me-2"></i>
+        {{ template.title }}
+        {% if edit_report %}
+        <small class="text-muted fs-6">(تعديل)</small>
+        {% endif %}
+      </h2>
+      {% if template.description %}
+      <p class="text-muted">{{ template.description }}</p>
+      {% endif %}
+    </div>
+    <a href="{{ url_for('reports_page') }}" class="btn btn-secondary">
+      <i class="fas fa-arrow-right me-1"></i> رجوع
+    </a>
+  </div>
+
+  <div class="report-form-container">
+    <form id="reportForm" novalidate>
+      <input type="hidden" id="templateId" value="{{ template.id }}" />
+      <input type="hidden" id="reportId" value="{{ edit_report.id if edit_report else '' }}" />
+
+      <div id="dynamicFields">
+        {% for field in template.structure %}
+          {% if field.type == 'heading' %}
+            <div class="field-wrapper heading-field">
+              <h4>{{ field.label }}</h4>
+            </div>
+
+          {% elif field.type == 'divider' %}
+            <div class="field-wrapper divider-field">
+              <hr />
+            </div>
+
+          {% elif field.type == 'subheading' %}
+            <div class="field-wrapper subheading-field">
+              <h5>{{ field.label }}</h5>
+            </div>
+
+          {% elif field.type == 'signature' %}
+            <div class="field-wrapper">
+              <label class="form-label">{{ field.label }}</label>
+              <canvas id="canvas_{{ field.name }}" class="signature-canvas" data-field="{{ field.name }}"></canvas>
+              <div class="mt-2">
+                <button type="button" class="btn btn-sm btn-danger" onclick="clearSignature('{{ field.name }}')">
+                  <i class="fas fa-eraser"></i> مسح التوقيع
+                </button>
+                <span class="text-muted small ms-2">ارسم توقيعك باستخدام الماوس أو اللمس</span>
+              </div>
+              <input type="hidden" name="{{ field.name }}" id="field_{{ field.name }}"
+                     value="{{ edit_report.data.get(field.name, '') if edit_report else '' }}" />
+            </div>
+
+          {% else %}
+            <div class="field-wrapper">
+              <label class="form-label {% if field.required %}required-field{% endif %}" for="field_{{ field.name }}">
+                {{ field.label }}
+              </label>
+
+              {% if field.type == 'text' %}
+                <input type="text" class="form-control" id="field_{{ field.name }}" name="{{ field.name }}"
+                       placeholder="{{ field.placeholder or '' }}"
+                       value="{{ edit_report.data.get(field.name, '') if edit_report else '' }}"
+                       {% if field.required %}required{% endif %} />
+
+              {% elif field.type == 'textarea' %}
+                <textarea class="form-control" id="field_{{ field.name }}" name="{{ field.name }}" rows="4"
+                          placeholder="{{ field.placeholder or '' }}"
+                          {% if field.required %}required{% endif %}>{{ edit_report.data.get(field.name, '') if edit_report else '' }}</textarea>
+
+              {% elif field.type == 'number' %}
+                <input type="number" class="form-control" id="field_{{ field.name }}" name="{{ field.name }}"
+                       placeholder="{{ field.placeholder or '' }}"
+                       value="{{ edit_report.data.get(field.name, '') if edit_report else '' }}"
+                       {% if field.required %}required{% endif %} />
+
+              {% elif field.type == 'date' %}
+                <input type="date" class="form-control" id="field_{{ field.name }}" name="{{ field.name }}"
+                       value="{{ edit_report.data.get(field.name, '') if edit_report else '' }}"
+                       {% if field.required %}required{% endif %} />
+
+              {% elif field.type == 'select' %}
+                <select class="form-select" id="field_{{ field.name }}" name="{{ field.name }}"
+                        {% if field.required %}required{% endif %}>
+                  <option value="">-- اختر --</option>
+                  {% for option in field.options %}
+                    <option value="{{ option }}"
+                      {% if edit_report and edit_report.data.get(field.name, '') == option %}selected{% endif %}>
+                      {{ option }}
+                    </option>
+                  {% endfor %}
+                </select>
+
+              {% elif field.type == 'checkbox' %}
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="field_{{ field.name }}" name="{{ field.name }}" value="1"
+                         {% if edit_report and edit_report.data.get(field.name, '') %}checked{% endif %} />
+                  <label class="form-check-label fw-bold" for="field_{{ field.name }}">
+                    {{ field.label }}
+                    {% if field.required %}<span class="text-danger">*</span>{% endif %}
+                  </label>
+                </div>
+              {% endif %}
+
+              <div class="invalid-feedback" id="feedback_{{ field.name }}">
+                يرجى إدخال قيمة صحيحة
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <div class="action-buttons">
+        <button type="button" class="btn btn-primary" onclick="window.saveReport(document.getElementById('templateId').value, document.getElementById('reportId').value)">
+          <i class="fas fa-save me-2"></i>{% if edit_report %}تعديل{% else %}حفظ{% endif %} التقرير
+        </button>
+        <button type="button" class="btn btn-danger" onclick="window.saveAndGeneratePDF(document.getElementById('templateId').value, document.getElementById('reportId').value)">
+          <i class="fas fa-file-pdf me-2"></i>{% if edit_report %}تعديل{% else %}حفظ{% endif %} وتوليد PDF
+        </button>
+      </div>
+
+      <div id="saveResult" class="mt-3 text-center"></div>
+    </form>
+  </div>
+</div>
+
+<!-- ✅ حقن بيانات التعديل -->
+<script>
+  {% if edit_report %}
+  window.EDIT_REPORT = {{ edit_report|tojson }};
+  {% endif %}
+</script>
+
+<!-- ✅ كود التقارير الموحد -->
+<script src="{{ url_for('static', filename='js/reports.js') }}"></script>
+
+<script>
+  // ============================================
+  // ✅ تهيئة الصفحة
+  // ============================================
+  document.addEventListener('DOMContentLoaded', function() {
+    // تهيئة حقول التوقيع
+    document.querySelectorAll('.signature-canvas').forEach(canvas => {
+      initSignatureCanvas(canvas);
+    });
+
+    // التحقق من صحة الحقول أثناء الكتابة
+    document.querySelectorAll('[required]').forEach(field => {
+      field.addEventListener('input', function() {
+        if (this.value.trim()) {
+          this.classList.remove('is-invalid');
+        }
+      });
+      field.addEventListener('change', function() {
+        if (this.value.trim()) {
+          this.classList.remove('is-invalid');
+        }
+      });
+    });
+
+    // تحميل بيانات التعديل للتوقيعات
+    if (window.EDIT_REPORT && window.EDIT_REPORT.data) {
+      setTimeout(() => {
+        for (const [key, value] of Object.entries(window.EDIT_REPORT.data)) {
+          if (typeof value === 'string' && value.startsWith('data:image')) {
+            const canvas = document.getElementById(`canvas_${key}`);
+            if (canvas) {
+              const ctx = canvas.getContext('2d');
+              const img = new Image();
+              img.onload = function() {
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                canvas.classList.add('has-signature');
+              };
+              img.src = value;
+            }
+          }
+        }
+      }, 500);
+    }
+
+    console.log('📄 Report form loaded');
+    console.log('📋 Template ID:', document.getElementById('templateId').value);
+    console.log('✏️ Edit mode:', !!document.getElementById('reportId').value);
+  });
+</script>
+{% endblock %}

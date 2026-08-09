@@ -1,0 +1,118 @@
+{% extends "base.html" %} {% block title %}خطأ - {{ status_code }}{% endblock %}
+{% block extra_css %}
+<style>
+  .error-container {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  .error-card {
+    background: white;
+    border-radius: 25px;
+    padding: 50px 40px;
+    max-width: 550px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  }
+
+  .error-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+  }
+  .error-code {
+    font-size: 72px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+  }
+  .error-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin: 15px 0 10px;
+  }
+  .error-message {
+    color: #6c757d;
+    font-size: 16px;
+    margin-bottom: 25px;
+    line-height: 1.6;
+  }
+  .error-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary-custom {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  .btn-primary-custom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+    color: white;
+    text-decoration: none;
+  }
+
+  .btn-outline-custom {
+    background: transparent;
+    color: #667eea;
+    border: 2px solid #667eea;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  .btn-outline-custom:hover {
+    background: #667eea;
+    color: white;
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
+</style>
+{% endblock %} {% block content %}
+<div class="container">
+  <div class="error-container">
+    <div class="error-card">
+      <div class="error-icon">
+        {% if status_code == 404 %}🔍 {% elif status_code == 403 %}🚫 {% elif
+        status_code == 500 %}💥 {% elif status_code == 413 %}📦 {% else %}⚠️ {%
+        endif %}
+      </div>
+
+      <div class="error-code">{{ status_code }}</div>
+
+      <div class="error-title">
+        {% if status_code == 404 %}الصفحة غير موجودة {% elif status_code == 403
+        %}غير مصرح بالوصول {% elif status_code == 500 %}خطأ داخلي {% elif
+        status_code == 413 %}الملف كبير جداً {% else %}حدث خطأ {% endif %}
+      </div>
+
+      <div class="error-message">{{ error_message }}</div>
+
+      <div class="error-actions">
+        <a href="{{ url_for('clinical_data') }}" class="btn-primary-custom">
+          <i class="fas fa-home me-2"></i> العودة للرئيسية
+        </a>
+        <button onclick="history.back()" class="btn-outline-custom">
+          <i class="fas fa-arrow-right me-2"></i> العودة للخلف
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

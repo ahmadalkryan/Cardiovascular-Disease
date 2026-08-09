@@ -1,0 +1,629 @@
+{% extends "base.html" %} {% block title %}محرر القوالب الطبية - مساعد طبيب
+قلبية{% endblock %} {% block extra_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/reports.css') }}"
+/>
+{% endblock %} {% block content %}
+<div class="container-fluid my-4">
+  <div
+    class="d-flex justify-content-between align-items-center flex-wrap mb-3 px-3 gap-2"
+  >
+    <div>
+      <h3 class="fw-bold mb-0">
+        <i class="fas fa-file-medical me-2" style="color: #667eea"></i>
+        محرر القوالب الطبية {% if edit_template %}
+        <small class="text-muted fs-6">(تعديل)</small>
+        {% endif %}
+      </h3>
+      <small class="text-muted"
+        >قم بإضافة الحقول لبناء قالب التقرير الطبي</small
+      >
+    </div>
+    <div class="d-flex gap-2 flex-wrap">
+      <a href="{{ url_for('reports_page') }}" class="btn btn-secondary">
+        <i class="fas fa-arrow-right me-1"></i> رجوع
+      </a>
+      <button class="btn btn-outline-info" onclick="previewTemplate()">
+        <i class="fas fa-eye me-1"></i> معاينة
+      </button>
+      <button class="btn btn-primary px-4" onclick="saveTemplate()">
+        <i class="fas fa-save me-1"></i> حفظ القالب
+      </button>
+    </div>
+  </div>
+
+  <div class="builder-container">
+    <!-- القائمة الجانبية -->
+    <div class="field-palette">
+      <h6><i class="fas fa-plus-circle me-1"></i> إضافة حقل</h6>
+
+      <div class="field-type-group">
+        <div class="group-label">أساسي</div>
+        {% for ft in field_types %}{% if ft.category == 'basic' %}
+        <button class="field-type-btn" onclick="addField('{{ ft.type }}')">
+          <i class="fas {{ ft.icon }}"></i> {{ ft.label }}
+        </button>
+        {% endif %}{% endfor %}
+      </div>
+
+      <div class="field-type-group">
+        <div class="group-label">اختيارات</div>
+        {% for ft in field_types %}{% if ft.category == 'choice' %}
+        <button class="field-type-btn" onclick="addField('{{ ft.type }}')">
+          <i class="fas {{ ft.icon }}"></i> {{ ft.label }}
+        </button>
+        {% endif %}{% endfor %}
+      </div>
+
+      <div class="field-type-group">
+        <div class="group-label">تخطيط</div>
+        {% for ft in field_types %}{% if ft.category == 'layout' %}
+        <button class="field-type-btn" onclick="addField('{{ ft.type }}')">
+          <i class="fas {{ ft.icon }}"></i> {{ ft.label }}
+        </button>
+        {% endif %}{% endfor %}
+      </div>
+
+      <hr class="my-3" />
+
+      <div class="mb-2">
+        <label class="form-label fw-bold small mb-1">اسم القالب</label>
+        <input
+          type="text"
+          id="templateTitle"
+          class="form-control form-control-sm"
+          placeholder="مثال: تقرير فحص قلب"
+        />
+      </div>
+
+      <div class="mb-2">
+        <label class="form-label fw-bold small mb-1">الوصف</label>
+        <input
+          type="text"
+          id="templateDescription"
+          class="form-control form-control-sm"
+          placeholder="وصف مختصر"
+        />
+      </div>
+
+      <div>
+        <label class="form-label fw-bold small mb-1">الفئة</label>
+        <select id="templateCategory" class="form-select form-select-sm">
+          <option value="general">عام</option>
+          <option value="cardiology">قلبية</option>
+          <option value="surgery">جراحة</option>
+          <option value="laboratory">مخبرية</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- منطقة العمل -->
+    <div>
+      <div class="builder-canvas" id="templateCanvas">
+        <div class="canvas-empty" id="emptyCanvas">
+          <i class="fas fa-arrow-left fa-3x mb-3" style="color: #ccc"></i>
+          <p>أضف حقولاً من القائمة الجانبية لبناء القالب</p>
+        </div>
+        <div id="fieldsContainer"></div>
+      </div>
+
+      <!-- لوحة الخصائص -->
+      <div
+        class="card shadow-sm mt-3"
+        id="propertiesPanel"
+        style="display: none"
+      >
+        <div
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h6 class="mb-0">
+            <i class="fas fa-sliders-h me-1"></i> خصائص الحقل
+          </h6>
+          <button
+            class="btn btn-sm btn-outline-danger"
+            onclick="deleteSelectedField()"
+          >
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+        <div class="card-body">
+          <input type="hidden" id="selectedFieldIndex" value="-1" />
+          <div class="row g-2">
+            <div class="col-6">
+              <label class="form-label small fw-bold">اسم الحقل (تقني)</label>
+              <input
+                type="text"
+                id="propName"
+                class="form-control form-control-sm"
+                onchange="applyProperty('name', this.value)"
+              />
+            </div>
+            <div class="col-6">
+              <label class="form-label small fw-bold">العنوان المعروض</label>
+              <input
+                type="text"
+                id="propLabel"
+                class="form-control form-control-sm"
+                onchange="applyProperty('label', this.value)"
+              />
+            </div>
+            <div class="col-6">
+              <label class="form-label small fw-bold">نص مساعد</label>
+              <input
+                type="text"
+                id="propPlaceholder"
+                class="form-control form-control-sm"
+                onchange="applyProperty('placeholder', this.value)"
+              />
+            </div>
+            <div class="col-6 d-flex align-items-end">
+              <div class="form-check">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  id="propRequired"
+                  onchange="applyProperty('required', this.checked)"
+                />
+                <label class="form-check-label small fw-bold">مطلوب</label>
+              </div>
+            </div>
+          </div>
+          <div id="optionsSection" style="display: none" class="mt-2">
+            <label class="form-label small fw-bold">الخيارات</label>
+            <div class="input-group input-group-sm">
+              <input
+                type="text"
+                id="newOption"
+                class="form-control"
+                placeholder="أضف خياراً"
+              />
+              <button class="btn btn-outline-primary" onclick="addOption()">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+            <div id="optionsList" class="mt-2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Preview Modal -->
+<div class="modal fade" id="previewModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content border-0 shadow" style="border-radius: 16px">
+      <div
+        class="modal-header"
+        style="
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          border-radius: 16px 16px 0 0;
+        "
+      >
+        <h5 class="modal-title">
+          <i class="fas fa-eye me-2"></i>معاينة القالب
+        </h5>
+        <button
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body" id="previewContent">
+        <div class="text-center py-4">
+          <div class="spinner-border text-primary" role="status"></div>
+          <p class="mt-2 text-muted">جاري تحميل المعاينة...</p>
+        </div>
+      </div>
+      <div class="modal-footer border-0">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Modals -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content border-0 shadow" style="border-radius: 16px">
+      <div
+        class="modal-header bg-danger text-white"
+        style="border-radius: 16px 16px 0 0"
+      >
+        <h6 class="modal-title">
+          <i class="fas fa-exclamation-triangle me-2"></i>تأكيد الحذف
+        </h6>
+        <button
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body text-center py-4">
+        <p class="mb-0">هل أنت متأكد من حذف هذا الحقل؟</p>
+        <small class="text-muted">لا يمكن التراجع عن هذا الإجراء</small>
+      </div>
+      <div class="modal-footer border-0 justify-content-center">
+        <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+          إلغاء
+        </button>
+        <button class="btn btn-danger btn-sm" id="confirmDeleteBtn">حذف</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ✅ كود التقارير الموحد -->
+<script src="{{ url_for('static', filename='js/reports.js') }}"></script>
+
+<script>
+  // ============================================
+  // ✅ بيانات التعديل
+  // ============================================
+  {% if edit_template %}
+  window.EDIT_TEMPLATE = {{ edit_template|tojson }};
+  {% endif %}
+
+  // ============================================
+  // ✅ المتغيرات العامة
+  // ============================================
+  let fields = [];
+  let selectedIndex = -1;
+  let nextFieldId = 0;
+
+  // ============================================
+  // ✅ التهيئة
+  // ============================================
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.EDIT_TEMPLATE) {
+      document.getElementById('templateTitle').value = window.EDIT_TEMPLATE.title || '';
+      document.getElementById('templateDescription').value = window.EDIT_TEMPLATE.description || '';
+      document.getElementById('templateCategory').value = window.EDIT_TEMPLATE.category || 'general';
+
+      if (window.EDIT_TEMPLATE.structure && window.EDIT_TEMPLATE.structure.length > 0) {
+        fields = window.EDIT_TEMPLATE.structure.map(f => ({ ...f, id: nextFieldId++ }));
+        renderFields();
+        showNotification('✅ تم تحميل القالب للتعديل', 'success');
+      }
+    }
+    console.log('📝 Template Builder initialized');
+  });
+
+  // ============================================
+  // ✅ دوال الحقول
+  // ============================================
+  function addField(type) {
+    const fieldTypes = {
+      'text': { label: 'نص قصير', icon: 'fa-font', category: 'basic' },
+      'textarea': { label: 'نص طويل', icon: 'fa-align-left', category: 'basic' },
+      'number': { label: 'رقم', icon: 'fa-hashtag', category: 'basic' },
+      'date': { label: 'تاريخ', icon: 'fa-calendar', category: 'basic' },
+      'select': { label: 'قائمة منسدلة', icon: 'fa-list', category: 'choice' },
+      'checkbox': { label: 'مربع اختيار', icon: 'fa-check-square', category: 'choice' },
+      'heading': { label: 'عنوان قسم', icon: 'fa-heading', category: 'layout' },
+      'subheading': { label: 'عنوان فرعي', icon: 'fa-heading', category: 'layout' },
+      'divider': { label: 'فاصل', icon: 'fa-minus', category: 'layout' },
+      'signature': { label: 'توقيع الطبيب', icon: 'fa-signature', category: 'layout' }
+    };
+
+    const info = fieldTypes[type] || { label: type, icon: 'fa-cube', category: 'basic' };
+
+    const newField = {
+      id: nextFieldId++,
+      type: type,
+      name: `${type}_${nextFieldId}`,
+      label: info.label,
+      placeholder: '',
+      required: false,
+      options: type === 'select' ? ['خيار 1', 'خيار 2'] : [],
+      category: info.category
+    };
+
+    fields.push(newField);
+    renderFields();
+    selectField(fields.length - 1);
+    showNotification(`✅ تم إضافة حقل "${info.label}"`, 'success');
+  }
+
+  function renderFields() {
+    const container = document.getElementById('fieldsContainer');
+    const empty = document.getElementById('emptyCanvas');
+
+    if (fields.length === 0) {
+      container.innerHTML = '';
+      empty.style.display = 'block';
+      document.getElementById('propertiesPanel').style.display = 'none';
+      return;
+    }
+
+    empty.style.display = 'none';
+
+    let html = '';
+    fields.forEach((field, index) => {
+      const isSelected = index === selectedIndex;
+      const typeClass = field.type === 'heading' ? 'heading-field' :
+                       field.type === 'subheading' ? 'subheading-field' :
+                       field.type === 'divider' ? 'divider-field' :
+                       field.type === 'signature' ? 'signature-field' : '';
+
+      html += `
+        <div class="field-item ${typeClass} ${isSelected ? 'selected' : ''}"
+             onclick="selectField(${index})"
+             draggable="true"
+             data-index="${index}">
+          <span class="drag-handle">⠿</span>
+          <div>
+            <span class="field-label-display">${field.label}</span>
+            ${field.required ? ' <span class="badge bg-danger">مطلوب</span>' : ''}
+            <span class="field-type-badge ms-2">${field.type}</span>
+          </div>
+        </div>
+      `;
+    });
+
+    container.innerHTML = html;
+
+    // Drag & Drop
+    document.querySelectorAll('.field-item').forEach(item => {
+      item.addEventListener('dragstart', handleDragStart);
+      item.addEventListener('dragover', handleDragOver);
+      item.addEventListener('drop', handleDrop);
+      item.addEventListener('dragend', handleDragEnd);
+    });
+  }
+
+  function selectField(index) {
+    if (index < 0 || index >= fields.length) return;
+
+    selectedIndex = index;
+    const field = fields[index];
+
+    document.querySelectorAll('.field-item').forEach((el, i) => {
+      el.classList.toggle('selected', i === index);
+    });
+
+    const panel = document.getElementById('propertiesPanel');
+    panel.style.display = 'block';
+
+    document.getElementById('selectedFieldIndex').value = index;
+    document.getElementById('propName').value = field.name || '';
+    document.getElementById('propLabel').value = field.label || '';
+    document.getElementById('propPlaceholder').value = field.placeholder || '';
+    document.getElementById('propRequired').checked = field.required || false;
+
+    const optionsSection = document.getElementById('optionsSection');
+    if (field.type === 'select') {
+      optionsSection.style.display = 'block';
+      renderOptions(index);
+    } else {
+      optionsSection.style.display = 'none';
+    }
+  }
+
+  function applyProperty(property, value) {
+    const index = parseInt(document.getElementById('selectedFieldIndex').value);
+    if (index < 0 || index >= fields.length) return;
+
+    fields[index][property] = value;
+    renderFields();
+    selectField(index);
+  }
+
+  // ============================================
+  // ✅ دوال الخيارات (Select)
+  // ============================================
+  function renderOptions(index) {
+    const container = document.getElementById('optionsList');
+    const field = fields[index];
+    if (!field || !field.options) return;
+
+    container.innerHTML = field.options.map((opt, i) => `
+      <span class="option-chip">
+        ${opt}
+        <span class="remove-option" onclick="removeOption(${i})">×</span>
+      </span>
+    `).join('');
+  }
+
+  function addOption() {
+    const input = document.getElementById('newOption');
+    const value = input.value.trim();
+    if (!value) return;
+
+    const index = parseInt(document.getElementById('selectedFieldIndex').value);
+    if (index < 0 || index >= fields.length) return;
+
+    if (!fields[index].options) fields[index].options = [];
+    fields[index].options.push(value);
+    input.value = '';
+    renderOptions(index);
+    showNotification('✅ تم إضافة خيار', 'success');
+  }
+
+  function removeOption(optionIndex) {
+    const index = parseInt(document.getElementById('selectedFieldIndex').value);
+    if (index < 0 || index >= fields.length) return;
+
+    fields[index].options.splice(optionIndex, 1);
+    renderOptions(index);
+    showNotification('🗑️ تم حذف الخيار', 'info');
+  }
+
+  // ============================================
+  // ✅ حذف الحقل
+  // ============================================
+  function deleteSelectedField() {
+    if (selectedIndex < 0 || selectedIndex >= fields.length) return;
+    new bootstrap.Modal(document.getElementById('confirmDeleteModal')).show();
+  }
+
+  document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
+    if (selectedIndex >= 0 && selectedIndex < fields.length) {
+      const label = fields[selectedIndex].label;
+      fields.splice(selectedIndex, 1);
+      selectedIndex = -1;
+      renderFields();
+      document.getElementById('propertiesPanel').style.display = 'none';
+      showNotification(`🗑️ تم حذف الحقل "${label}"`, 'info');
+    }
+    bootstrap.Modal.getInstance(document.getElementById('confirmDeleteModal')).hide();
+  });
+
+  // ============================================
+  // ✅ السحب والإفلات
+  // ============================================
+  let dragIndex = null;
+
+  function handleDragStart(e) {
+    dragIndex = parseInt(this.dataset.index);
+    this.style.opacity = '0.5';
+  }
+
+  function handleDragOver(e) {
+    e.preventDefault();
+    this.style.borderColor = '#667eea';
+  }
+
+  function handleDrop(e) {
+    e.preventDefault();
+    this.style.borderColor = '';
+    const dropIndex = parseInt(this.dataset.index);
+    if (dragIndex !== null && dragIndex !== dropIndex) {
+      const [removed] = fields.splice(dragIndex, 1);
+      fields.splice(dropIndex, 0, removed);
+      renderFields();
+      showNotification('🔄 تم إعادة ترتيب الحقول', 'info');
+    }
+    dragIndex = null;
+  }
+
+  function handleDragEnd(e) {
+    this.style.opacity = '1';
+    document.querySelectorAll('.field-item').forEach(el => {
+      el.style.borderColor = '';
+    });
+  }
+
+  // ============================================
+  // ✅ المعاينة
+  // ============================================
+  function previewTemplate() {
+    const content = document.getElementById('previewContent');
+
+    if (fields.length === 0) {
+      content.innerHTML = `
+        <div class="text-center py-5">
+          <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+          <p class="text-muted">لا توجد حقول لعرضها</p>
+        </div>
+      `;
+      new bootstrap.Modal(document.getElementById('previewModal')).show();
+      return;
+    }
+
+    let html = `
+      <div class="report-preview">
+        <div style="background: #f8f9fa; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+          <h4 style="color: #667eea; margin: 0;">${document.getElementById('templateTitle').value || 'قالب غير مسمى'}</h4>
+          ${document.getElementById('templateDescription').value ? `<p style="color: #888; margin: 5px 0 0;">${document.getElementById('templateDescription').value}</p>` : ''}
+          <small style="color: #aaa;">الفئة: ${document.getElementById('templateCategory').selectedOptions[0].text}</small>
+        </div>
+        <div style="padding: 10px;">
+    `;
+
+    fields.forEach(field => {
+      if (field.type === 'heading') {
+        html += `<h4 style="color: #667eea; border-bottom: 2px solid #667eea; padding-bottom: 8px; margin: 20px 0 10px;">${field.label}</h4>`;
+      } else if (field.type === 'subheading') {
+        html += `<h5 style="color: #764ba2; margin: 15px 0 8px;">${field.label}</h5>`;
+      } else if (field.type === 'divider') {
+        html += `<hr style="border: 2px dashed #e0e0e0; margin: 15px 0;">`;
+      } else if (field.type === 'signature') {
+        html += `
+          <div style="margin: 10px 0; padding: 10px; border: 2px dashed #ccc; border-radius: 8px; text-align: center;">
+            <i class="fas fa-signature fa-2x text-muted"></i>
+            <p style="color: #888; margin: 5px 0 0;">${field.label}</p>
+          </div>
+        `;
+      } else {
+        const required = field.required ? ' <span style="color:#e74c3c;">*</span>' : '';
+        html += `
+          <div style="margin: 10px 0;">
+            <label style="font-weight: 600; display: block; margin-bottom: 4px;">${field.label}${required}</label>
+            ${field.type === 'textarea' ? `<textarea style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 6px; min-height: 80px;" placeholder="${field.placeholder || ''}"></textarea>` :
+              field.type === 'select' ? `<select style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 6px;"><option>-- اختر --</option>${(field.options || []).map(o => `<option>${o}</option>`).join('')}</select>` :
+              field.type === 'checkbox' ? `<input type="checkbox" style="margin-left: 8px;" /> ${field.label}` :
+              `<input type="${field.type === 'number' ? 'number' : 'text'}" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 6px;" placeholder="${field.placeholder || ''}" />`
+            }
+          </div>
+        `;
+      }
+    });
+
+    html += `
+        </div>
+      </div>
+    `;
+
+    content.innerHTML = html;
+    new bootstrap.Modal(document.getElementById('previewModal')).show();
+  }
+
+  // ============================================
+  // ✅ حفظ القالب
+  // ============================================
+  async function saveTemplate() {
+    const title = document.getElementById('templateTitle').value.trim();
+    if (!title) {
+      showNotification('⚠️ الرجاء إدخال اسم القالب', 'error');
+      document.getElementById('templateTitle').focus();
+      return;
+    }
+
+    if (fields.length === 0) {
+      showNotification('⚠️ الرجاء إضافة حقل واحد على الأقل', 'error');
+      return;
+    }
+
+    const data = {
+      title: title,
+      description: document.getElementById('templateDescription').value.trim(),
+      category: document.getElementById('templateCategory').value,
+      structure: fields.map(f => ({
+        type: f.type,
+        name: f.name,
+        label: f.label,
+        placeholder: f.placeholder || '',
+        required: f.required || false,
+        options: f.options || []
+      }))
+    };
+
+    const isEdit = !!window.EDIT_TEMPLATE;
+    const url = isEdit ? `/api/templates/${window.EDIT_TEMPLATE.id}` : '/api/templates';
+    const method = isEdit ? 'PUT' : 'POST';
+
+    try {
+      const response = await fetch(url, {
+        method: method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        showNotification('✅ تم حفظ القالب بنجاح!', 'success');
+        setTimeout(() => {
+          window.location.href = '{{ url_for('reports_page') }}';
+        }, 1500);
+      } else {
+        showNotification(result.error || 'فشل حفظ القالب', 'error');
+      }
+    } catch (error) {
+      showNotification('خطأ في الاتصال بالخادم', 'error');
+      console.error('Error saving template:', error);
+    }
+  }
+</script>
+{% endblock %}

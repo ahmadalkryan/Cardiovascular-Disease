@@ -1,0 +1,121 @@
+{% extends "base.html" %} {% block title %}لوحة التحكم - الإحصائيات{% endblock
+%} {% block extra_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/dashboard.css') }}"
+/>
+{% endblock %} {% block content %}
+<div class="container my-5">
+  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+    <h2>
+      <i class="fas fa-chart-line me-2" style="color: #667eea"></i>لوحة التحكم
+      والإحصائيات
+    </h2>
+    <div>
+      <a href="{{ url_for('index') }}" class="btn btn-outline-primary me-2">
+        <i class="fas fa-stethoscope"></i> تشخيص جديد
+      </a>
+      <a href="{{ url_for('patients_page') }}" class="btn btn-outline-success">
+        <i class="fas fa-list"></i> قائمة المرضى
+      </a>
+    </div>
+  </div>
+
+  <!-- بطاقات الإحصائيات -->
+  <div class="row g-4 mb-4" id="statsCards">
+    <div class="col-md-3">
+      <div
+        class="stat-card"
+        onclick="window.location.href='{{ url_for('patients_page') }}'"
+      >
+        <i class="fas fa-users fa-3x mb-3" style="color: #667eea"></i>
+        <div class="stat-number" id="totalPatients">0</div>
+        <div class="text-muted">إجمالي المرضى</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div
+        class="stat-card"
+        onclick="window.location.href='{{ url_for('patients_page') }}?filter=disease'"
+      >
+        <i class="fas fa-heartbeat fa-3x mb-3" style="color: #e74c3c"></i>
+        <div class="stat-number" id="diseaseCount">0</div>
+        <div class="text-muted">حالات مرضية</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div
+        class="stat-card"
+        onclick="window.location.href='{{ url_for('patients_page') }}?filter=healthy'"
+      >
+        <i class="fas fa-smile fa-3x mb-3" style="color: #2ecc71"></i>
+        <div class="stat-number" id="healthyCount">0</div>
+        <div class="text-muted">حالات سليمة</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="stat-card">
+        <i class="fas fa-chart-simple fa-3x mb-3" style="color: #f39c12"></i>
+        <div class="stat-number" id="avgProbability">0%</div>
+        <div class="text-muted">متوسط نسبة الخطر</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- الرسوم البيانية -->
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="chart-container">
+        <h5 class="mb-3"><i class="fas fa-chart-pie me-2"></i>توزيع الحالات</h5>
+        <canvas id="statusChart" height="250"></canvas>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="chart-container">
+        <h5 class="mb-3">
+          <i class="fas fa-chart-bar me-2"></i>المرضى حسب النموذج
+        </h5>
+        <canvas id="modelChart" height="250"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- آخر الحالات -->
+  <div class="table-container mt-4">
+    <h5 class="mb-3"><i class="fas fa-table me-2"></i>آخر 10 حالات مسجلة</h5>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>المعرف</th>
+            <th>التاريخ</th>
+            <th>الوقت</th>
+            <th>النتيجة</th>
+            <th>الاحتمالية</th>
+            <th>النموذج</th>
+          </tr>
+        </thead>
+        <tbody id="recentTableBody">
+          <tr>
+            <td colspan="6" class="text-center">
+              <div class="loading-spinner"></div>
+              <span class="ms-2">جاري تحميل البيانات...</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- زر تحديث -->
+<button class="refresh-btn" title="تحديث البيانات">
+  <i class="fas fa-sync-alt"></i>
+</button>
+
+<!-- ✅ Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- ✅ كود لوحة التحكم (منفصل) -->
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

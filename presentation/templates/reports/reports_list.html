@@ -1,0 +1,525 @@
+{% extends "base.html" %} {% block title %}التقارير الطبية - مساعد طبيب قلبية{%
+endblock %} {% block extra_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/reports.css') }}"
+/>
+{% endblock %} {% block content %}
+<div class="container my-5">
+  <div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
+    <div>
+      <h2 class="fw-bold mb-1">
+        <i class="fas fa-file-medical-alt me-2" style="color: #667eea"></i>
+        التقارير الطبية
+      </h2>
+      <p class="text-muted mb-0">إدارة القوالب والتقارير الطبية</p>
+    </div>
+    <div class="d-flex gap-2 flex-wrap mt-2 mt-md-0">
+      <select
+        class="form-select"
+        id="categoryFilter"
+        onchange="window.filterByCategory()"
+        style="width: auto; min-width: 140px"
+      >
+        <option value="all">جميع الفئات</option>
+        <option value="general">عام</option>
+        <option value="cardiology">قلبية</option>
+        <option value="surgery">جراحة</option>
+        <option value="laboratory">مخبرية</option>
+      </select>
+      <a
+        href="{{ url_for('template_builder_page') }}"
+        class="btn btn-primary px-4"
+      >
+        <i class="fas fa-plus-circle me-1"></i> قالب جديد
+      </a>
+    </div>
+  </div>
+
+  <div id="templatesContainer">
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary" role="status"></div>
+      <p class="mt-3 text-muted">جاري تحميل القوالب والتقارير...</p>
+    </div>
+  </div>
+</div>
+
+<!-- Detail Modal -->
+<div class="modal fade detail-modal" id="reportDetailModal" tabindex="-1">
+  <div
+    class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+  >
+    <div class="modal-content border-0 shadow" style="border-radius: 16px">
+      <div
+        class="modal-header"
+        style="
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          border-radius: 16px 16px 0 0;
+        "
+      >
+        <h5 class="modal-title">
+          <i class="fas fa-file-medical me-2"></i>تفاصيل التقرير
+        </h5>
+        <button
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body" id="reportDetailContent">
+        <div class="text-center py-4">
+          <div class="spinner-border text-primary" role="status"></div>
+        </div>
+      </div>
+      <div class="modal-footer border-0">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Delete Modals -->
+<div class="modal fade" id="confirmDeleteTemplateModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow" style="border-radius: 16px">
+      <div
+        class="modal-header bg-danger text-white"
+        style="border-radius: 16px 16px 0 0"
+      >
+        <h6 class="modal-title">
+          <i class="fas fa-exclamation-triangle me-2"></i>تأكيد حذف القالب
+        </h6>
+        <button
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body text-center py-4">
+        <i class="fas fa-trash fa-3x text-danger mb-3 d-block"></i>
+        <p class="mb-0 fw-bold">سيتم حذف القالب وجميع تقاريره نهائياً!</p>
+        <small class="text-muted">لا يمكن التراجع عن هذا الإجراء</small>
+      </div>
+      <div class="modal-footer border-0 justify-content-center">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+        <button class="btn btn-danger" id="confirmDeleteTemplateBtn">
+          <i class="fas fa-trash me-1"></i> حذف نهائي
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="confirmDeleteReportModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content border-0 shadow" style="border-radius: 16px">
+      <div
+        class="modal-header bg-danger text-white"
+        style="border-radius: 16px 16px 0 0"
+      >
+        <h6 class="modal-title">
+          <i class="fas fa-exclamation-triangle me-2"></i>تأكيد حذف التقرير
+        </h6>
+        <button
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body text-center py-4">
+        <i class="fas fa-file-medical fa-2x text-danger mb-2 d-block"></i>
+        <p class="mb-0">هل أنت متأكد من حذف هذا التقرير؟</p>
+        <small class="text-muted">لا يمكن التراجع عن هذا الإجراء</small>
+      </div>
+      <div class="modal-footer border-0 justify-content-center">
+        <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+          إلغاء
+        </button>
+        <button class="btn btn-danger btn-sm" id="confirmDeleteReportBtn">
+          <i class="fas fa-trash me-1"></i> حذف
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ✅ كود التقارير الموحد -->
+<script src="{{ url_for('static', filename='js/reports.js') }}"></script>
+
+<script>
+  // ============================================
+  // ✅ دوال التحميل والعرض
+  // ============================================
+  let pendingTemplateId = null;
+  let pendingReportId = null;
+
+  const catLabels = {
+    general: "عام",
+    cardiology: "قلبية",
+    surgery: "جراحة",
+    laboratory: "مخبرية",
+  };
+
+  const catBadges = {
+    general: "badge-general",
+    cardiology: "badge-cardiology",
+    surgery: "badge-surgery",
+    laboratory: "badge-laboratory",
+  };
+
+  window.loadReports = async function (category = "all") {
+    const container = document.getElementById("templatesContainer");
+    try {
+      let url = "/api/templates";
+      if (category !== "all") url += `?category=${category}`;
+
+      const response = await fetch(url);
+      const data = await response.json();
+
+      if (!data.success || data.templates.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-folder-open"></i>
+            <h4>لا توجد قوالب بعد</h4>
+            <p>قم بإنشاء أول قالب تقرير طبي</p>
+            <a href="{{ url_for('template_builder_page') }}" class="btn btn-primary mt-3">
+              <i class="fas fa-plus-circle me-1"></i> إنشاء قالب
+            </a>
+          </div>
+        `;
+        return;
+      }
+
+      let html = "";
+      for (const template of data.templates) {
+        html += `
+          <div class="template-card" data-template-id="${template.id}">
+            <div class="template-card-header">
+              <div>
+                <h5>${template.title}</h5>
+                <small class="text-muted">${template.description || "بدون وصف"}</small>
+              </div>
+              <div class="d-flex align-items-center gap-2 flex-wrap">
+                <span class="badge-category ${catBadges[template.category] || "badge-general"}">
+                  ${catLabels[template.category] || template.category}
+                </span>
+                <span class="badge bg-light text-dark">${template.report_count} تقارير</span>
+                ${template.field_count ? `<span class="badge bg-light text-dark">${template.field_count} حقول</span>` : ""}
+              </div>
+            </div>
+            <div class="template-card-body">
+              <div id="reports-${template.id}">
+                <div class="text-center py-3">
+                  <div class="spinner-border spinner-border-sm text-muted" role="status"></div>
+                </div>
+              </div>
+            </div>
+            <div class="template-card-footer">
+              <small class="text-muted">
+                <i class="far fa-clock me-1"></i>
+                ${template.created_at || "تاريخ غير معروف"}
+              </small>
+              <div class="d-flex gap-1">
+                <button class="btn-action success" title="تقرير جديد" onclick="location.href='{{ url_for('fill_report_page', template_id=0) }}'.replace('0', '${template.id}')">
+                  <i class="fas fa-plus"></i>
+                </button>
+                <button class="btn-action" title="عرض التقارير" onclick="window.scrollToReports(${template.id})">
+                  <i class="fas fa-list"></i>
+                </button>
+                <button class="btn-action warning" title="تعديل القالب" onclick="location.href='{{ url_for('edit_template_page', template_id=0) }}'.replace('0', '${template.id}')">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn-action danger" title="حذف القالب" onclick="deleteTemplate(${template.id})">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+      container.innerHTML = html;
+
+      for (const template of data.templates) {
+        loadTemplateReports(template.id);
+      }
+    } catch (error) {
+      console.error("Error loading templates:", error);
+      container.innerHTML = `
+        <div class="alert alert-danger">
+          <i class="fas fa-exclamation-triangle me-2"></i>
+          <strong>خطأ في تحميل البيانات</strong>
+          <p class="mb-0 mt-1">${error.message || "حدث خطأ غير متوقع"}</p>
+          <button class="btn btn-outline-danger btn-sm mt-2" onclick="window.loadReports()">
+            <i class="fas fa-redo me-1"></i> إعادة المحاولة
+          </button>
+        </div>
+      `;
+    }
+  };
+
+  async function loadTemplateReports(templateId) {
+    const container = document.getElementById(`reports-${templateId}`);
+    try {
+      const response = await fetch(`/api/templates/${templateId}/reports`);
+      const data = await response.json();
+
+      if (data.success && data.reports && data.reports.length > 0) {
+        container.innerHTML = `
+          <table class="reports-table">
+            <thead>
+              <tr>
+                <th>رقم التقرير</th>
+                <th>المريض</th>
+                <th>التاريخ</th>
+                <th>PDF</th>
+                <th>إجراءات</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${data.reports
+                .map(
+                  (r) => `
+                <tr>
+                  <td><code>${r.report_uid}</code></td>
+                  <td><code>${r.patient_uid || "-"}</code></td>
+                  <td>${r.created_at || "-"}</td>
+                  <td>
+                    ${
+                      r.has_pdf
+                        ? `<a href="/api/reports/${r.id}/pdf" class="btn-action" target="_blank" title="تحميل PDF">
+                          <i class="fas fa-file-pdf" style="color:#e74c3c"></i>
+                        </a>`
+                        : `<span class="text-muted">-</span>`
+                    }
+                  </td>
+                  <td>
+                    <div class="d-flex gap-1">
+                      <button class="btn-action" title="تفاصيل" onclick="showReportDetail(${r.id})">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button class="btn-action warning" title="تعديل التقرير" onclick="location.href='{{ url_for('edit_report_page', report_id=0) }}'.replace('0', '${r.id}')">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button class="btn-action danger" title="حذف التقرير" onclick="deleteReport(${r.id})">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              `,
+                )
+                .join("")}
+            </tbody>
+          </table>
+        `;
+      } else {
+        container.innerHTML = `
+          <div class="text-center py-3 text-muted">
+            <i class="fas fa-inbox me-1"></i>
+            لا توجد تقارير بعد
+            <button class="btn btn-sm btn-outline-primary ms-2" onclick="location.href='{{ url_for('fill_report_page', template_id=0) }}'.replace('0', '${templateId}')">
+              <i class="fas fa-plus me-1"></i> إضافة
+            </button>
+          </div>
+        `;
+      }
+    } catch (error) {
+      console.error("Error loading reports:", error);
+      container.innerHTML = `
+        <div class="text-center py-3 text-danger">
+          <i class="fas fa-exclamation-circle me-1"></i>
+          خطأ في تحميل التقارير
+        </div>
+      `;
+    }
+  }
+
+  // ============================================
+  // ✅ عرض تفاصيل التقرير
+  // ============================================
+  async function showReportDetail(reportId) {
+    const content = document.getElementById("reportDetailContent");
+    content.innerHTML = `
+      <div class="text-center py-4">
+        <div class="spinner-border text-primary" role="status"></div>
+        <p class="mt-2 text-muted">جاري تحميل التفاصيل...</p>
+      </div>
+    `;
+
+    try {
+      const response = await fetch(`/api/reports/${reportId}`);
+      const data = await response.json();
+
+      if (!data.success) {
+        content.innerHTML = `
+          <div class="alert alert-danger">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            ${data.error || "فشل تحميل تفاصيل التقرير"}
+          </div>
+        `;
+        return;
+      }
+
+      const r = data.report;
+      let fieldsHtml = "";
+
+      if (r.data) {
+        const entries = Object.entries(r.data);
+        if (entries.length > 0) {
+          fieldsHtml = entries
+            .map(([key, value]) => {
+              let displayValue = value;
+              if (typeof value === "string" && value.startsWith("data:image")) {
+                displayValue =
+                  '<i class="fas fa-signature text-success"></i> توقيع إلكتروني';
+              } else if (typeof value === "boolean") {
+                displayValue = value ? "نعم ✅" : "لا ❌";
+              } else if (
+                value === null ||
+                value === undefined ||
+                value === ""
+              ) {
+                displayValue = "-";
+              }
+              return `
+              <div class="detail-item">
+                <span class="label">${key}</span>
+                <span class="value">${displayValue}</span>
+              </div>
+            `;
+            })
+            .join("");
+        } else {
+          fieldsHtml =
+            '<p class="text-muted text-center">لا توجد بيانات مدخلة</p>';
+        }
+      } else {
+        fieldsHtml =
+          '<p class="text-muted text-center">لا توجد بيانات مدخلة</p>';
+      }
+
+      content.innerHTML = `
+        <div class="detail-grid mb-3">
+          <div class="detail-item">
+            <span class="label">رقم التقرير</span>
+            <span class="value"><code>${r.report_uid}</code></span>
+          </div>
+          <div class="detail-item">
+            <span class="label">القالب</span>
+            <span class="value">${r.template_title || "-"}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">المريض</span>
+            <span class="value"><code>${r.patient_uid || "-"}</code></span>
+          </div>
+          <div class="detail-item">
+            <span class="label">التاريخ</span>
+            <span class="value">${r.created_at || "-"}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">PDF</span>
+            <span class="value">
+              ${
+                r.has_pdf
+                  ? `<a href="/api/reports/${r.id}/pdf" class="btn btn-sm btn-danger" target="_blank">
+                    <i class="fas fa-file-pdf me-1"></i> تحميل
+                  </a>`
+                  : '<span class="text-muted">غير متوفر</span>'
+              }
+            </span>
+          </div>
+        </div>
+        <h6 class="fw-bold mb-3"><i class="fas fa-database me-1"></i>البيانات المدخلة</h6>
+        <div class="detail-grid">${fieldsHtml}</div>
+      `;
+
+      new bootstrap.Modal(document.getElementById("reportDetailModal")).show();
+    } catch (error) {
+      console.error("Error loading report detail:", error);
+      content.innerHTML = `
+        <div class="alert alert-danger">
+          <i class="fas fa-exclamation-triangle me-2"></i>
+          خطأ في الاتصال بالخادم
+        </div>
+      `;
+    }
+  }
+
+  // ============================================
+  // ✅ دوال الحذف
+  // ============================================
+  function deleteTemplate(id) {
+    pendingTemplateId = id;
+    new bootstrap.Modal(
+      document.getElementById("confirmDeleteTemplateModal"),
+    ).show();
+  }
+
+  document
+    .getElementById("confirmDeleteTemplateBtn")
+    .addEventListener("click", async () => {
+      if (pendingTemplateId) {
+        try {
+          const response = await fetch(`/api/templates/${pendingTemplateId}`, {
+            method: "DELETE",
+          });
+          const data = await response.json();
+
+          if (data.success) {
+            showNotification("✅ تم حذف القالب بنجاح", "success");
+            bootstrap.Modal.getInstance(
+              document.getElementById("confirmDeleteTemplateModal"),
+            ).hide();
+            window.loadReports(document.getElementById("categoryFilter").value);
+          } else {
+            showNotification(data.error || "فشل حذف القالب", "error");
+          }
+        } catch (error) {
+          showNotification("خطأ في الاتصال بالخادم", "error");
+          console.error("Error deleting template:", error);
+        }
+        pendingTemplateId = null;
+      }
+    });
+
+  function deleteReport(id) {
+    pendingReportId = id;
+    new bootstrap.Modal(
+      document.getElementById("confirmDeleteReportModal"),
+    ).show();
+  }
+
+  document
+    .getElementById("confirmDeleteReportBtn")
+    .addEventListener("click", async () => {
+      if (pendingReportId) {
+        try {
+          const response = await fetch(`/api/reports/${pendingReportId}`, {
+            method: "DELETE",
+          });
+          const data = await response.json();
+
+          if (data.success) {
+            showNotification("✅ تم حذف التقرير بنجاح", "success");
+            bootstrap.Modal.getInstance(
+              document.getElementById("confirmDeleteReportModal"),
+            ).hide();
+            window.loadReports(document.getElementById("categoryFilter").value);
+          } else {
+            showNotification(data.error || "فشل حذف التقرير", "error");
+          }
+        } catch (error) {
+          showNotification("خطأ في الاتصال بالخادم", "error");
+          console.error("Error deleting report:", error);
+        }
+        pendingReportId = null;
+      }
+    });
+
+  // ============================================
+  // ✅ تهيئة الصفحة
+  // ============================================
+  document.addEventListener("DOMContentLoaded", function () {
+    window.loadReports();
+    console.log("📄 Reports list page loaded");
+  });
+</script>
+{% endblock %}

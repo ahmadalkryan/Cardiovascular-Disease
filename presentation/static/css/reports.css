@@ -1,0 +1,429 @@
+/* static/css/reports.css */
+/* ============================================ */
+/* أنماط نظام التقارير - موحدة                  */
+/* ============================================ */
+
+/* ── Report List Cards ── */
+.template-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  margin-bottom: 24px;
+  transition: all 0.3s;
+  border: 1px solid #eef0f5;
+}
+
+.template-card:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.template-card-header {
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  border-bottom: 1px solid #f0f0f0;
+  background: linear-gradient(to left, #fafbff, #ffffff);
+}
+
+.template-card-header h5 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.template-card-header .badge-category {
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge-general {
+  background: #667eea20;
+  color: #667eea;
+}
+.badge-cardiology {
+  background: #e74c3c20;
+  color: #e74c3c;
+}
+.badge-surgery {
+  background: #f39c1220;
+  color: #f39c12;
+}
+.badge-laboratory {
+  background: #2ecc7120;
+  color: #2ecc71;
+}
+
+.template-card-footer {
+  padding: 12px 24px;
+  background: #fafbff;
+  border-top: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* ── Reports Table ── */
+.reports-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.reports-table th {
+  background: #f8f9fc;
+  color: #666;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 12px 16px;
+  text-align: right;
+  border-bottom: 2px solid #eef0f5;
+}
+
+.reports-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f5f5f5;
+  font-size: 14px;
+}
+
+.reports-table tr:hover td {
+  background: #fafbff;
+}
+
+/* ── Action Buttons ── */
+.btn-action {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #666;
+}
+
+.btn-action:hover {
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
+}
+.btn-action.danger:hover {
+  background: #e74c3c;
+  border-color: #e74c3c;
+}
+.btn-action.success:hover {
+  background: #2ecc71;
+  border-color: #2ecc71;
+}
+.btn-action.warning:hover {
+  background: #f39c12;
+  border-color: #f39c12;
+}
+
+/* ── Report Form ── */
+.report-form-container {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+.field-wrapper {
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  background: #f8f9fa;
+  transition: all 0.3s;
+}
+
+.field-wrapper:hover {
+  background: #f0f2f5;
+}
+
+.field-wrapper .form-label {
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 8px;
+}
+
+.field-wrapper .form-label.required-field::after {
+  content: " *";
+  color: #e74c3c;
+}
+
+.field-wrapper .form-control,
+.field-wrapper .form-select {
+  border-radius: 10px;
+  border: 2px solid #e0e0e0;
+  padding: 10px 15px;
+  transition: all 0.3s;
+}
+
+.field-wrapper .form-control:focus,
+.field-wrapper .form-select:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+/* ── Signature Canvas ── */
+.signature-canvas {
+  background: #fff;
+  cursor: crosshair;
+  width: 100%;
+  max-width: 500px;
+  height: 150px;
+  touch-action: none;
+  border: 2px dashed #667eea;
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+
+.signature-canvas:hover {
+  border-color: #764ba2;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.signature-canvas.has-signature {
+  border-color: #2ecc71;
+  border-style: solid;
+}
+
+/* ── Template Builder ── */
+.builder-container {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 24px;
+  min-height: 600px;
+}
+
+.field-palette {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  height: fit-content;
+  position: sticky;
+  top: 80px;
+}
+
+.field-palette h6 {
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #1a1a2e;
+}
+
+.field-type-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #eef0f5;
+  border-radius: 10px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 6px;
+  font-size: 13px;
+  color: #555;
+}
+
+.field-type-btn:hover {
+  background: #667eea10;
+  border-color: #667eea;
+  color: #667eea;
+  transform: translateX(-3px);
+}
+
+.field-type-btn i {
+  width: 18px;
+  text-align: center;
+  color: #667eea;
+}
+
+.builder-canvas {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  min-height: 400px;
+}
+
+.field-item {
+  border: 1px solid #eef0f5;
+  border-radius: 10px;
+  padding: 14px 35px 14px 14px;
+  margin-bottom: 10px;
+  background: #fafbff;
+  transition: all 0.2s;
+  cursor: move;
+  position: relative;
+}
+
+.field-item:hover {
+  border-color: #667eea;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+}
+
+.field-item.selected {
+  border-color: #667eea;
+  background: #f8f9ff;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+.field-item .drag-handle {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: grab;
+  color: #ccc;
+  font-size: 18px;
+  user-select: none;
+  padding: 10px 5px;
+}
+
+.field-item.heading-field {
+  border-color: #667eea;
+  background: #f8f9ff;
+}
+
+.field-item.heading-field .field-label-display {
+  font-size: 18px;
+  font-weight: 700;
+  color: #667eea;
+}
+
+.field-item.subheading-field {
+  border-color: #764ba2;
+  background: #faf5ff;
+}
+
+.field-item.subheading-field .field-label-display {
+  font-size: 16px;
+  font-weight: 600;
+  color: #764ba2;
+}
+
+.field-item.divider-field {
+  border-style: dashed;
+  border-color: #ccc;
+}
+
+.field-item.signature-field {
+  border-color: #f39c12;
+  background: #fffaf0;
+}
+
+/* ── Modal Detail ── */
+.detail-modal .modal-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.detail-item {
+  padding: 12px;
+  background: #f8f9fc;
+  border-radius: 8px;
+}
+
+.detail-item .label {
+  font-size: 11px;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detail-item .value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin-top: 4px;
+}
+
+/* ── Empty State ── */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-state i {
+  font-size: 64px;
+  color: #e0e0e0;
+  margin-bottom: 20px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 992px) {
+  .builder-container {
+    grid-template-columns: 1fr;
+  }
+  .field-palette {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+  .template-card-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  .template-card-footer {
+    flex-direction: column;
+    text-align: center;
+  }
+  .report-form-container {
+    padding: 15px;
+  }
+  .field-wrapper {
+    padding: 10px;
+  }
+  .signature-canvas {
+    max-width: 100%;
+    height: 120px;
+  }
+  .builder-canvas {
+    padding: 15px;
+    min-height: 300px;
+  }
+  .reports-table {
+    font-size: 12px;
+  }
+  .reports-table th,
+  .reports-table td {
+    padding: 8px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .template-card-header h5 {
+    font-size: 16px;
+  }
+  .field-item {
+    padding: 10px 30px 10px 10px;
+  }
+  .field-item .field-label-display {
+    font-size: 13px;
+  }
+}

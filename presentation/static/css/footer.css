@@ -1,0 +1,33 @@
+/* static/css/footer.css */
+/* ============================================ */
+/* أنماط التذييل - منفصلة عن base.html          */
+/* ============================================ */
+
+.footer {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: white;
+  padding: 20px 0;
+  margin-top: 50px;
+}
+
+.footer .badge {
+  font-size: 12px;
+  padding: 5px 12px;
+}
+
+.footer a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: white;
+}
+
+.toast-container {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 9999;
+}

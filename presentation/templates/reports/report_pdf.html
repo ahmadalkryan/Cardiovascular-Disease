@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ template_title }} - تقرير طبي</title>
+    <style>
+      /* ============================================ */
+      /* ✅ استيراد الخط مع fallback */
+      /* ============================================ */
+      @import url("https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap");
+
+      /* ============================================ */
+      /* ✅ الأنماط الأساسية */
+      /* ============================================ */
+      * {
+        font-family: "Cairo", "Segoe UI", Tahoma, sans-serif;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        background: white;
+        color: #2c3e50;
+        line-height: 1.8;
+        font-size: 14px;
+      }
+
+      .pdf-report {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 50px;
+        background: white;
+        box-shadow: 0 5px 30px rgba(0, 0, 0, 0.05);
+      }
+
+      /* ============================================ */
+      /* ✅ Header */
+      /* ============================================ */
+      .report-header {
+        text-align: center;
+        border-bottom: 3px solid #667eea;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+        position: relative;
+      }
+
+      .report-header .logo {
+        font-size: 26px;
+        font-weight: 800;
+        color: #667eea;
+        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .report-header .logo .heart-icon {
+        color: #e74c3c;
+        animation: heartbeat-pdf 1.5s ease-in-out infinite;
+        display: inline-block;
+      }
+
+      @keyframes heartbeat-pdf {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        14% {
+          transform: scale(1.2);
+        }
+        28% {
+          transform: scale(1);
+        }
+        42% {
+          transform: scale(1.2);
+        }
+        70% {
+          transform: scale(1);
+        }
+      }
+
+      .report-header h1 {
+        color: #2c3e50;
+        font-size: 24px;
+        font-weight: 800;
+        margin: 8px 0 5px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .report-header .report-meta {
+        color: #888;
+        font-size: 13px;
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px 20px;
+      }
+
+      .report-header .report-meta .meta-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        background: #f8f9fa;
+        padding: 4px 12px;
+        border-radius: 50px;
+        font-size: 12px;
+      }
+
+      .report-header .report-meta .meta-item .label {
+        color: #888;
+        font-weight: 400;
+      }
+
+      .report-header .report-meta .meta-item .value {
+        color: #2c3e50;
+        font-weight: 600;
+      }
+
+      /* ============================================ */
+      /* ✅ Sections */
+      /* ============================================ */
+      .report-section {
+        margin-bottom: 25px;
+        page-break-inside: avoid;
+      }
+
+      .report-section h4 {
+        color: #667eea;
+        border-bottom: 2px solid #e8ebff;
+        padding-bottom: 8px;
+        margin-bottom: 15px;
+        font-size: 16px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .report-section h4 .section-icon {
+        font-size: 18px;
+      }
+
+      /* ============================================ */
+      /* ✅ Field Rows */
+      /* ============================================ */
+      .field-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px dotted #f0f0f0;
+        transition: background 0.2s;
+      }
+
+      .field-row:last-child {
+        border-bottom: none;
+      }
+
+      .field-label {
+        font-weight: 600;
+        color: #555;
+        flex: 0 0 40%;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .field-label .label-icon {
+        color: #667eea;
+        font-size: 14px;
+      }
+
+      .field-value {
+        color: #2c3e50;
+        flex: 0 0 55%;
+        text-align: left;
+        font-size: 14px;
+        word-break: break-word;
+        padding: 2px 10px;
+        border-radius: 4px;
+        background: #fafbff;
+      }
+
+      .field-value.highlight {
+        color: #667eea;
+        font-weight: 700;
+        font-size: 15px;
+        background: #e8ebff;
+        padding: 4px 12px;
+        border-radius: 4px;
+      }
+
+      .field-value.danger {
+        color: #e74c3c;
+        font-weight: 700;
+        background: #fde8e8;
+        padding: 4px 12px;
+        border-radius: 4px;
+      }
+
+      .field-value.success {
+        color: #2ecc71;
+        font-weight: 700;
+        background: #e8f8ed;
+        padding: 4px 12px;
+        border-radius: 4px;
+      }
+
+      .field-value.warning {
+        color: #f39c12;
+        font-weight: 700;
+        background: #fef5e7;
+        padding: 4px 12px;
+        border-radius: 4px;
+      }
+
+      .field-value .empty-value {
+        color: #ccc;
+        font-style: italic;
+      }
+
+      .checkbox-true {
+        color: #2ecc71;
+        font-weight: 700;
+      }
+
+      .checkbox-false {
+        color: #e74c3c;
+        font-weight: 700;
+      }
+
+      /* ============================================ */
+      /* ✅ Signature Field */
+      /* ============================================ */
+      .signature-row {
+        display: flex;
+        flex-direction: column;
+        padding: 15px 0;
+        border-bottom: 1px dotted #f0f0f0;
+      }
+
+      .signature-row .signature-image {
+        max-width: 200px;
+        max-height: 80px;
+        margin-top: 10px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 10px;
+        background: #fafbff;
+        align-self: flex-start;
+      }
+
+      .signature-row .signature-image img {
+        max-width: 100%;
+        max-height: 60px;
+        display: block;
+      }
+
+      /* ============================================ */
+      /* ✅ Divider */
+      /* ============================================ */
+      .report-divider {
+        border: none;
+        border-top: 2px dashed #e0e0e0;
+        margin: 25px 0;
+        opacity: 0.6;
+      }
+
+      /* ============================================ */
+      /* ✅ Footer */
+      /* ============================================ */
+      .report-footer {
+        margin-top: 40px;
+        padding-top: 25px;
+        border-top: 2px solid #e0e0e0;
+        position: relative;
+      }
+
+      .report-footer .signature-section {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 30px;
+        margin-top: 10px;
+      }
+
+      .report-footer .signature-box {
+        text-align: center;
+        min-width: 150px;
+        flex: 1;
+      }
+
+      .report-footer .signature-box .signature-label {
+        font-size: 12px;
+        color: #888;
+        margin-bottom: 5px;
+      }
+
+      .report-footer .signature-box .signature-line {
+        border-bottom: 2px solid #2c3e50;
+        margin: 30px 0 8px;
+        width: 100%;
+        min-width: 120px;
+      }
+
+      .report-footer .signature-box .signature-name {
+        font-size: 13px;
+        font-weight: 600;
+        color: #2c3e50;
+      }
+
+      .report-footer .footer-text {
+        text-align: center;
+        margin-top: 25px;
+        color: #aaa;
+        font-size: 11px;
+        line-height: 1.6;
+      }
+
+      .report-footer .footer-text .footer-divider {
+        display: inline-block;
+        margin: 0 8px;
+        color: #ddd;
+      }
+
+      .report-footer .footer-text .copyright {
+        color: #667eea;
+        font-weight: 600;
+      }
+
+      /* ============================================ */
+      /* ✅ Watermark */
+      /* ============================================ */
+      .watermark {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(-45deg);
+        font-size: 80px;
+        color: rgba(102, 126, 234, 0.04);
+        font-weight: 800;
+        pointer-events: none;
+        z-index: 0;
+        white-space: nowrap;
+      }
+
+      /* ============================================ */
+      /* ✅ Print Optimization */
+      /* ============================================ */
+      @media print {
+        body {
+          background: white;
+          margin: 0;
+          padding: 0;
+        }
+        .pdf-report {
+          padding: 30px 40px;
+          box-shadow: none;
+          max-width: 100%;
+        }
+        .field-row:hover {
+          background: transparent;
+        }
+        .field-value {
+          background: transparent;
+        }
+        .field-value.highlight,
+        .field-value.danger,
+        .field-value.success,
+        .field-value.warning {
+          background: transparent;
+          padding: 2px 8px;
+        }
+        .report-header .report-meta .meta-item {
+          background: transparent;
+        }
+        .watermark {
+          font-size: 60px;
+        }
+        .report-footer .signature-box .signature-line {
+          margin: 20px 0 5px;
+        }
+        .report-section {
+          page-break-inside: avoid;
+        }
+      }
+
+      /* ============================================ */
+      /* ✅ Responsive */
+      /* ============================================ */
+      @media (max-width: 600px) {
+        .pdf-report {
+          padding: 20px;
+        }
+        .field-row {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 4px;
+        }
+        .field-label {
+          flex: 1;
+          font-size: 12px;
+        }
+        .field-value {
+          flex: 1;
+          text-align: right;
+          width: 100%;
+          font-size: 13px;
+        }
+        .report-header h1 {
+          font-size: 20px;
+        }
+        .report-header .logo {
+          font-size: 20px;
+        }
+        .report-header .report-meta {
+          flex-direction: column;
+          align-items: center;
+        }
+        .report-footer .signature-section {
+          flex-direction: column;
+          align-items: center;
+        }
+        .report-footer .signature-box {
+          width: 100%;
+          max-width: 250px;
+        }
+        .signature-row .signature-image {
+          max-width: 150px;
+        }
+      }
+
+      /* ============================================ */
+      /* ✅ Print-specific: إخفاء العناصر غير الضرورية */
+      /* ============================================ */
+      @media print {
+        .no-print {
+          display: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Watermark -->
+    <div class="watermark">طبيب قلبية</div>
+
+    <div class="pdf-report">
+      <!-- ============================================ -->
+      <!-- Header -->
+      <!-- ============================================ -->
+      <div class="report-header">
+        <div class="logo">
+          <span class="heart-icon">❤️</span>
+          مساعد طبيب قلبية
+          <span class="heart-icon">❤️</span>
+        </div>
+        <h1>{{ template_title }}</h1>
+        <div class="report-meta">
+          {% if patient_uid %}
+          <span class="meta-item">
+            <span class="label">📋 معرف المريض:</span>
+            <span class="value">{{ patient_uid }}</span>
+          </span>
+          {% endif %} {% if patient_name %}
+          <span class="meta-item">
+            <span class="label">👤 اسم المريض:</span>
+            <span class="value">{{ patient_name }}</span>
+          </span>
+          {% endif %}
+          <span class="meta-item">
+            <span class="label">📅 التاريخ:</span>
+            <span class="value">{{ report_date }}</span>
+          </span>
+          {% if report_uid %}
+          <span class="meta-item">
+            <span class="label">📄 رقم التقرير:</span>
+            <span class="value">{{ report_uid }}</span>
+          </span>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- ============================================ -->
+      <!-- Dynamic Fields -->
+      <!-- ============================================ -->
+      {% for field in structure %}
+
+      <!-- ========================================== -->
+      <!-- Heading -->
+      <!-- ========================================== -->
+      {% if field.type == 'heading' %}
+      <div class="report-section">
+        <h4>
+          <span class="section-icon">📌</span>
+          {{ field.label }}
+        </h4>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- Subheading -->
+      <!-- ========================================== -->
+      {% elif field.type == 'subheading' %}
+      <div class="report-section" style="margin-bottom: 10px">
+        <h5
+          style="
+            color: #764ba2;
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 5px;
+          "
+        >
+          {{ field.label }}
+        </h5>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- Divider -->
+      <!-- ========================================== -->
+      {% elif field.type == 'divider' %}
+      <hr class="report-divider" />
+
+      <!-- ========================================== -->
+      <!-- Signature -->
+      <!-- ========================================== -->
+      {% elif field.type == 'signature' %}
+      <div class="signature-row">
+        <div class="field-label">
+          <span class="label-icon">✍️</span>
+          {{ field.label }}
+        </div>
+        {% set signature_data = data.get(field.name, '') %} {% if signature_data
+        and signature_data.startswith('data:image') %}
+        <div class="signature-image">
+          <img src="{{ signature_data }}" alt="توقيع" />
+        </div>
+        {% elif signature_data %}
+        <div
+          class="field-value highlight"
+          style="flex: 1; text-align: right; margin-top: 5px"
+        >
+          {{ signature_data }}
+        </div>
+        {% else %}
+        <div
+          class="field-value"
+          style="flex: 1; text-align: right; margin-top: 5px"
+        >
+          <span class="empty-value">(لا يوجد توقيع)</span>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- ========================================== -->
+      <!-- Checkbox -->
+      <!-- ========================================== -->
+      {% elif field.type == 'checkbox' %}
+      <div class="field-row">
+        <span class="field-label">
+          <span class="label-icon">☑️</span>
+          {{ field.label }}
+        </span>
+        <span
+          class="field-value {{ 'checkbox-true' if data.get(field.name) else 'checkbox-false' }}"
+        >
+          {% if data.get(field.name) %} ✅ نعم {% else %} ❌ لا {% endif %}
+        </span>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- Other field types -->
+      <!-- ========================================== -->
+      {% else %}
+      <div class="field-row">
+        <span class="field-label">
+          <span class="label-icon">📝</span>
+          {{ field.label }}
+        </span>
+        <span
+          class="field-value {% if field.name in ['diagnosis', 'result', 'final_diagnosis'] %}highlight{% endif %}"
+        >
+          {{ data.get(field.name, '-') }}
+        </span>
+      </div>
+
+      {% endif %} {% endfor %}
+
+      <!-- ============================================ -->
+      <!-- Footer -->
+      <!-- ============================================ -->
+      <div class="report-footer">
+        <div class="signature-section">
+          <div class="signature-box">
+            <div class="signature-label">توقيع الطبيب</div>
+            <div class="signature-line"></div>
+            <div class="signature-name">_________________</div>
+          </div>
+          <div class="signature-box">
+            <div class="signature-label">ختم المؤسسة</div>
+            <div class="signature-line"></div>
+            <div class="signature-name">_________________</div>
+          </div>
+          <div class="signature-box">
+            <div class="signature-label">تاريخ التقرير</div>
+            <div class="signature-line"></div>
+            <div class="signature-name">{{ report_date }}</div>
+          </div>
+        </div>
+
+        <div class="footer-text">
+          <span>تم إنشاء هذا التقرير بواسطة نظام مساعد طبيب قلبية</span>
+          <span class="footer-divider">|</span>
+          <span>{{ report_date }}</span>
+          <br />
+          <span class="copyright">© 2026 جميع الحقوق محفوظة</span>
+          <span class="footer-divider">|</span>
+          <span style="color: #667eea">❤️</span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

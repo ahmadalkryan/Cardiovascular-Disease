@@ -1,0 +1,234 @@
+{% extends "base.html" %} {% block title %}التنبؤ الجماعي - رفع ملف الميزات{%
+endblock %} {% block extra_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/batch.css') }}"
+/>
+{% endblock %} {% block content %}
+<div class="container my-5">
+  <div class="row">
+    <div class="col-12">
+      <div class="card shadow-lg border-0 rounded-4">
+        <div
+          class="card-header bg-gradient-primary text-white rounded-4 rounded-bottom-0"
+          style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+        >
+          <h3 class="mb-0">
+            <i class="fas fa-upload me-2"></i>التشخيص الجماعي
+          </h3>
+          <p class="mb-0 mt-2">
+            ارفع ملف CSV أو Excel يحتوي على بيانات المرضى للتنبؤ الجماعي
+            باستخدام النماذج المتاحة
+          </p>
+        </div>
+        <div class="card-body p-4">
+          <!-- نموذج اختيار النموذج -->
+          <div class="model-selector">
+            <div class="row align-items-center">
+              <div class="col-md-4">
+                <label class="fw-bold"
+                  ><i class="fas fa-brain me-2"></i>اختر النموذج:</label
+                >
+              </div>
+              <div class="col-md-5">
+                <select id="modelSelect" class="form-select">
+                  <option value="minimal">
+                    ⚡ النموذج المبسط (4 ميزات - Logistic Regression)
+                  </option>
+                  <option value="top8" selected>
+                    ⭐ النموذج المتوسط (8 ميزات - Random Forest)
+                  </option>
+                  <option value="all11">
+                    🏆 النموذج الشامل (11 ميزة - KNN)
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-3 text-md-end mt-2 mt-md-0">
+                <button
+                  class="template-btn"
+                  onclick="
+                    window.location.href =
+                      '/api/batch-template?model=' +
+                      document.getElementById('modelSelect').value
+                  "
+                >
+                  <i class="fas fa-download me-1"></i> تحميل قالب CSV
+                </button>
+              </div>
+            </div>
+            <div class="mt-2">
+              <small class="text-muted">
+                <i class="fas fa-info-circle me-1"></i>
+                <span id="modelFeaturesDisplay">الميزات المطلوبة: ...</span>
+              </small>
+            </div>
+          </div>
+
+          <!-- منطقة رفع الملف -->
+          <div class="upload-area" id="uploadArea">
+            <div class="upload-icon mb-3">
+              <i
+                class="fas fa-cloud-upload-alt fa-5x"
+                style="color: #667eea"
+              ></i>
+            </div>
+            <h5>اسحب وأفلت ملفك هنا</h5>
+            <p class="text-muted">أو انقر لاختيار ملف</p>
+            <p class="small text-muted">
+              يدعم: CSV, Excel (.xlsx, .xls) - الحد الأقصى 16MB
+            </p>
+            <input
+              type="file"
+              id="fileInput"
+              accept=".csv,.xlsx,.xls"
+              style="display: none"
+            />
+          </div>
+
+          <!-- معلومات الملف -->
+          <div id="fileInfo" class="file-info" style="display: none">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <i
+                  class="fas fa-file-csv fa-2x me-3"
+                  style="color: #2ecc71"
+                ></i>
+                <span id="fileName" class="fw-bold"></span>
+                <span id="fileSize" class="text-muted ms-2"></span>
+              </div>
+              <div>
+                <button
+                  class="btn btn-sm btn-outline-danger"
+                  onclick="
+                    if (window.batchPredictor) {
+                      window.batchPredictor.selectedFile = null;
+                      window.batchPredictor.elements.fileInput.value = '';
+                      window.batchPredictor.elements.fileInfo.style.display =
+                        'none';
+                      window.batchPredictor.elements.uploadArea.style.display =
+                        'block';
+                      window.batchPredictor.elements.predictBtn.disabled = true;
+                      document.getElementById(
+                        'resultsContainer',
+                      ).style.display = 'none';
+                    }
+                  "
+                >
+                  <i class="fas fa-times"></i> إزالة
+                </button>
+              </div>
+            </div>
+            <div class="mt-2">
+              <small id="filePreview" class="text-muted"></small>
+            </div>
+            <div class="mt-2">
+              <small id="fileColumns" class="text-muted"></small>
+            </div>
+            <div class="mt-2" id="fileValidation" style="display: none">
+              <small id="fileValidationMessage" class="text-danger"></small>
+            </div>
+          </div>
+
+          <!-- زر التنبؤ -->
+          <button
+            class="btn btn-primary btn-lg w-100 mt-4"
+            id="predictBtn"
+            disabled
+          >
+            <i class="fas fa-chart-line me-2"></i> بدء التشخيص
+          </button>
+
+          <!-- منطقة عرض النتائج -->
+          <div id="resultsContainer" style="display: none"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal تعديل التشخيص -->
+<div class="modal fade" id="editModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div
+        class="modal-header"
+        style="
+          background: linear-gradient(135deg, #f39c12, #e67e22);
+          color: white;
+        "
+      >
+        <h5 class="modal-title">
+          <i class="fas fa-user-md me-2"></i>تعديل التشخيص
+        </h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="editRowIndex" />
+        <div class="mb-3">
+          <label class="form-label">التشخيص الجديد:</label>
+          <select id="editPrediction" class="form-select">
+            <option value="0">✅ سليم</option>
+            <option value="1">⚠️ مريض</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">نسبة الخطر (%):</label>
+          <input
+            type="number"
+            id="editProbability"
+            class="form-control"
+            step="0.1"
+            min="0"
+            max="100"
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">ملاحظات الطبيب:</label>
+          <textarea
+            id="editNotes"
+            class="form-control"
+            rows="3"
+            placeholder="أدخل ملاحظاتك هنا..."
+          ></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          إلغاء
+        </button>
+        <button
+          type="button"
+          class="btn btn-warning text-white"
+          onclick="
+            if (window.batchPredictor) {
+              window.batchPredictor._applyEdit();
+            }
+          "
+        >
+          <i class="fas fa-check me-1"></i> تطبيق التعديل
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loading Overlay -->
+<div id="loadingOverlay" class="loading-overlay">
+  <div class="loading-content">
+    <div
+      class="spinner-border text-primary"
+      style="width: 50px; height: 50px"
+      role="status"
+    ></div>
+    <p class="mt-3 mb-0" id="loadingMessage">جاري تحليل البيانات...</p>
+    <small class="text-muted">يرجى الانتظار</small>
+  </div>
+</div>
+
+<!-- ✅ سكربت التنبؤ المجمع (منفصل) -->
+<script src="{{ url_for('static', filename='js/batch.js') }}"></script>
+{% endblock %}

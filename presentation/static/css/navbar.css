@@ -1,0 +1,171 @@
+/* static/css/navbar.css */
+/* ============================================ */
+/* أنماط شريط التنقل - منفصلة عن base.html      */
+/* ============================================ */
+
+.navbar {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+  padding: 15px 0;
+}
+
+.navbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.navbar-brand {
+  color: white !important;
+  font-weight: 700;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 0;
+  order: 1;
+  flex-shrink: 0;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.navbar-brand:hover {
+  opacity: 0.9;
+  color: white !important;
+}
+
+.navbar-brand i {
+  font-size: 24px;
+  color: #ff6b6b;
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  14% {
+    transform: scale(1.2);
+  }
+  28% {
+    transform: scale(1);
+  }
+  42% {
+    transform: scale(1.2);
+  }
+  70% {
+    transform: scale(1);
+  }
+}
+
+.navbar-toggler {
+  order: 2;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.navbar-collapse {
+  order: 3;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.nav-link {
+  color: white !important;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  padding: 8px 16px !important;
+  border-radius: 50px;
+  font-size: 14px;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-link.active {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  padding: 8px 20px;
+}
+
+.nav-link i {
+  font-size: 14px;
+  margin-left: 4px;
+}
+
+/* ============================================ */
+/* استجابة للشاشات الصغيرة */
+/* ============================================ */
+@media (max-width: 992px) {
+  .navbar-collapse {
+    order: 4;
+    width: 100%;
+    justify-content: flex-start;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .navbar-nav {
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  .nav-link {
+    width: 100%;
+    padding: 10px 15px !important;
+  }
+
+  .navbar-brand {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-brand {
+    font-size: 15px;
+  }
+  .navbar-brand i {
+    font-size: 20px;
+  }
+  .nav-link {
+    font-size: 13px;
+    padding: 8px 12px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-brand {
+    font-size: 13px;
+  }
+  .navbar-brand i {
+    font-size: 16px;
+  }
+  .nav-link {
+    font-size: 12px;
+    padding: 6px 10px !important;
+  }
+}

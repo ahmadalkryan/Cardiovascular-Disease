@@ -1,0 +1,344 @@
+/* static/css/diagnosis.css */
+/* ============================================ */
+/* أنماط صفحة التشخيص - منفصلة عن HTML          */
+/* ============================================ */
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 60px 0;
+  border-radius: 0 0 50px 50px;
+}
+
+.text-gradient {
+  background: linear-gradient(to right, #fff, #f0e6ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Model Selector */
+.model-selector-top {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 25px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+.model-options-row {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.model-option-top {
+  flex: 1;
+  min-width: 150px;
+  padding: 12px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: 2px solid #e9ecef;
+  text-align: center;
+  background: white;
+}
+
+.model-option-top:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.model-option-top.active {
+  border-color: #667eea;
+  background: rgba(102, 126, 234, 0.08);
+  box-shadow: 0 3px 10px rgba(102, 126, 234, 0.2);
+}
+
+/* Inputs Grid */
+.inputs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.input-group-custom {
+  margin-bottom: 15px;
+}
+
+.input-group-custom label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.input-group-custom .form-control,
+.input-group-custom .form-select {
+  border-radius: 10px;
+  border: 2px solid #e0e0e0;
+  padding: 10px 15px;
+  transition: all 0.3s;
+}
+
+.input-group-custom .form-control:focus,
+.input-group-custom .form-select:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+/* Buttons */
+.btn-predict {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: 600;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.btn-predict:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 25px rgba(102, 126, 234, 0.4);
+}
+
+.btn-predict:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-save {
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.btn-save:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(46, 204, 113, 0.4);
+}
+
+.btn-save:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-edit-diagnosis {
+  background: linear-gradient(135deg, #f39c12, #e67e22);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.btn-edit-diagnosis:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(243, 156, 18, 0.4);
+}
+
+.btn-export {
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.btn-export:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(52, 152, 219, 0.4);
+}
+
+/* Results */
+.result-container-full {
+  width: 100%;
+  margin-top: 30px;
+  padding: 0;
+}
+
+.result-card {
+  padding: 30px 25px;
+  border-radius: 20px;
+  text-align: center;
+  animation: fadeInUp 0.5s ease;
+  width: 100%;
+}
+
+.result-healthy {
+  background: linear-gradient(135deg, #d4edda, #c3e6cb);
+  border: 2px solid #28a745;
+}
+
+.result-disease {
+  background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+  border: 2px solid #dc3545;
+}
+
+/* Progress Bars */
+.probability-section {
+  margin: 20px 0;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 15px;
+}
+
+.progress-bar-custom {
+  height: 30px;
+  border-radius: 50px;
+  overflow: hidden;
+  background: #e9ecef;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 15px;
+  font-weight: bold;
+  font-size: 14px;
+  color: white;
+  transition: width 0.8s ease;
+  min-width: 40px;
+}
+
+.progress-fill.healthy-fill {
+  background: linear-gradient(90deg, #2ecc71, #27ae60);
+}
+
+.progress-fill.disease-fill {
+  background: linear-gradient(90deg, #e74c3c, #c0392b);
+}
+
+/* Details Grid */
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.detail-card {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.3s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.detail-card:hover {
+  transform: translateY(-3px);
+}
+
+/* Diagnosis Edit Section */
+.diagnosis-edit-section {
+  background: #fff8e1;
+  border-radius: 15px;
+  padding: 20px;
+  margin-top: 15px;
+  border: 2px solid #f39c12;
+  display: none;
+}
+
+.diagnosis-edit-section.active {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Heart Animation */
+.heart-animation {
+  display: inline-block;
+  padding: 10px;
+}
+
+.heart-animation i {
+  font-size: 140px !important;
+  animation: heartbeat 1.5s ease-in-out infinite;
+  display: inline-block;
+  color: #ff6b6b;
+  text-shadow:
+    0 0 30px rgba(255, 107, 107, 0.3),
+    0 0 60px rgba(255, 107, 107, 0.2),
+    0 0 100px rgba(255, 107, 107, 0.1);
+}
+
+@keyframes heartbeat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  14% {
+    transform: scale(1.25);
+  }
+  28% {
+    transform: scale(1);
+  }
+  42% {
+    transform: scale(1.25);
+  }
+  70% {
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .inputs-grid {
+    grid-template-columns: 1fr;
+  }
+  .details-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .model-options-row {
+    flex-direction: column;
+  }
+  .heart-animation i {
+    font-size: 80px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .heart-animation i {
+    font-size: 60px !important;
+  }
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+}

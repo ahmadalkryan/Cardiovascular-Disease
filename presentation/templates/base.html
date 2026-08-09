@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}مساعد طبيب قلبية{% endblock %}</title>
+
+    <!-- Google Fonts - Cairo -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap 5 CSS -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/bootstrap.min.css') }}"
+    />
+
+    <!-- Font Awesome 6 -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/all.min.css') }}"
+    />
+
+    <!-- AOS Animation -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/aos.css') }}"
+    />
+
+    <!-- ✅ الأنماط العامة -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+
+    <!-- ✅ أنماط شريط التنقل -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/navbar.css') }}"
+    />
+
+    <!-- ✅ أنماط التذييل -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/footer.css') }}"
+    />
+
+    <!-- ✅ أنماط الصفحة الحالية -->
+    {% block extra_css %}{% endblock %}
+  </head>
+
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+      <div class="container">
+        <a class="navbar-brand" href="{{ url_for('clinical_data') }}">
+          <i class="fas fa-heartbeat"></i>
+          <strong>مساعد طبيب قلبية</strong>
+        </a>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            {% set active = request.endpoint|default('') %}
+            <li class="nav-item">
+              <a
+                class="nav-link {% if active == 'clinical_data' %}active{% endif %}"
+                href="{{ url_for('clinical_data') }}"
+              >
+                <i class="fas fa-home"></i> الرئيسية
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link {% if active == 'index' %}active{% endif %}"
+                href="{{ url_for('index') }}"
+              >
+                <i class="fas fa-stethoscope"></i> تشخيص فردي
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link {% if active == 'batch_predict_page' %}active{% endif %}"
+                href="{{ url_for('batch_predict_page') }}"
+              >
+                <i class="fas fa-upload"></i> تشخيص جماعي
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link {% if active == 'ecg_page' %}active{% endif %}"
+                href="{{ url_for('ecg_page') }}"
+              >
+                <i class="fas fa-heartbeat"></i> تحليل تخطيط قلب
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link {% if active == 'dashboard' %}active{% endif %}"
+                href="{{ url_for('dashboard') }}"
+              >
+                <i class="fas fa-chart-line"></i> لوحة التحكم
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link {% if active == 'patients_page' %}active{% endif %}"
+                href="{{ url_for('patients_page') }}"
+              >
+                <i class="fas fa-users"></i> المرضى
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link {% if active and active.startswith('reports') %}active{% endif %}"
+                href="{{ url_for('reports_page') }}"
+              >
+                <i class="fas fa-file-medical-alt"></i> التقارير
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>{% block content %}{% endblock %}</main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container text-center">
+        <div class="row">
+          <div class="col-md-4 text-center text-md-start mb-3 mb-md-0">
+            <i class="fas fa-heartbeat text-danger me-2"></i>
+            <span>نظام مساعد لطبيب القلب</span>
+          </div>
+          <div class="col-md-4 text-center mb-3 mb-md-0">
+            <span>© 2026 | جميع الحقوق محفوظة</span>
+          </div>
+          <div class="col-md-4 text-center text-md-end">
+            <span class="badge bg-primary">AI-Powered</span>
+            <span class="badge bg-info mx-1">Version 2.0</span>
+            <span class="badge bg-success mx-1">New Models</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container">
+      <div
+        id="notificationToast"
+        class="toast"
+        role="alert"
+        data-bs-autohide="true"
+        data-bs-delay="3000"
+      >
+        <div class="toast-header">
+          <i class="fas fa-info-circle me-2"></i>
+          <strong class="me-auto">إشعار</strong>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="toast"
+          ></button>
+        </div>
+        <div class="toast-body" id="toastMessage"></div>
+      </div>
+    </div>
+
+    <!-- ✅ Core Scripts -->
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/aos.js') }}"></script>
+
+    <!-- ✅ التطبيق الرئيسي (دوال عامة) -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+    <!-- ✅ سكربتات الصفحة الحالية -->
+    {% block extra_js %}{% endblock %}
+  </body>
+</html>

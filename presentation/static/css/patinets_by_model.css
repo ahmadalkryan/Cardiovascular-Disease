@@ -1,0 +1,75 @@
+/* static/css/patients_by_model.css */
+/* ============================================ */
+/* أنماط المرضى حسب النموذج - منفصلة عن HTML   */
+/* ============================================ */
+
+.model-card-wrapper {
+  border: none;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s;
+}
+
+.model-card-wrapper:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.model-card-header {
+  color: white;
+  padding: 15px 20px;
+}
+
+.model-minimal .model-card-header {
+  background: linear-gradient(135deg, #3498db, #2980b9);
+}
+.model-top8 .model-card-header {
+  background: linear-gradient(135deg, #f39c12, #e67e22);
+}
+.model-all11 .model-card-header {
+  background: linear-gradient(135deg, #9b59b6, #8e44ad);
+}
+
+.model-badge {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 50px;
+  font-size: 12px;
+  margin-left: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.stat-box {
+  padding: 10px 15px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.stat-box-danger {
+  background: #ffebee;
+  color: #c62828;
+}
+.stat-box-success {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.stat-number {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: #6c757d;
+}
+
+.empty-state i {
+  font-size: 48px;
+  margin-bottom: 15px;
+  color: #dee2e6;
+}

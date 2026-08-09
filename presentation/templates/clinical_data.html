@@ -1,0 +1,151 @@
+{% extends "base.html" %} {% block title %}البيانات السريرية - نظام تشخيص أمراض
+القلب{% endblock %} {% block extra_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/clinical.css') }}"
+/>
+{% endblock %} {% block content %}
+<div class="container my-5">
+  <!-- Hero Section -->
+  <div class="clinical-hero" data-aos="fade-down">
+    <div class="icon-circle">
+      <i class="fas fa-notes-medical"></i>
+    </div>
+    <h1 class="fw-bold mb-3">البيانات السريرية</h1>
+    <p class="lead mb-0">
+      اختر الطريقة المناسبة لإدخال البيانات السريرية للمريض
+    </p>
+    <p class="mt-2 opacity-75">
+      يمكنك إدخال البيانات عبر تعبئة نموذج أو رفع ملف Excel/CSV للتنبؤ الجماعي
+    </p>
+  </div>
+
+  <!-- Selection Methods -->
+  <div class="row g-4" data-aos="fade-up" data-aos-delay="200">
+    <!-- الطريقة الأولى: الفورم اليدوي -->
+    <div class="col-lg-6">
+      <div
+        class="method-card form-card"
+        onclick="navigateTo('{{ url_for('index') }}')"
+      >
+        <span class="badge-recommended"
+          ><i class="fas fa-star me-1"></i> موصى به</span
+        >
+        <div class="method-icon"><i class="fas fa-keyboard"></i></div>
+        <h3><i class="fas fa-pen-to-square me-2"></i>تعبئة قالب</h3>
+        <p>
+          قم بإدخال بيانات مريض واحد يدوياً من خلال نموذج تفاعلي سهل الاستخدام
+          مع نتائج فورية دقيقة
+        </p>
+        <ul class="feature-list mb-4">
+          <li><i class="fas fa-check-circle"></i> إدخال بيانات مريض واحد</li>
+          <li><i class="fas fa-check-circle"></i> نتيجة فورية</li>
+          <li>
+            <i class="fas fa-check-circle"></i> إمكانية تعديل التشخيص النهائي
+          </li>
+          <li>
+            <i class="fas fa-check-circle"></i> اختيار بين 3 نماذج تعلم آلي
+          </li>
+          <li><i class="fas fa-check-circle"></i> حفظ البيانات</li>
+        </ul>
+        <button
+          class="btn-method"
+          onclick="navigateTo('{{ url_for('index') }}')"
+        >
+          <i class="fas fa-stethoscope me-2"></i> بدء التشخيص الفردي
+        </button>
+      </div>
+    </div>
+
+    <!-- الطريقة الثانية: رفع ملف -->
+    <div class="col-lg-6">
+      <div
+        class="method-card file-card"
+        onclick="navigateTo('{{ url_for('batch_predict_page') }}')"
+      >
+        <div class="method-icon"><i class="fas fa-file-csv"></i></div>
+        <h3><i class="fas fa-upload me-2"></i>رفع ملف للبيانات السريرية</h3>
+        <p>
+          قم برفع ملف Excel أو CSV يحتوي على بيانات مرضى للتنبؤ الجماعي ومعالجة
+          الحالات دفعة واحدة
+        </p>
+        <ul class="feature-list mb-4">
+          <li><i class="fas fa-check-circle"></i> دعم ملفات CSV و Excel</li>
+          <li><i class="fas fa-check-circle"></i> تحميل قالب جاهز للتعبئة</li>
+          <li><i class="fas fa-check-circle"></i> نتائج جماعية مع إحصائيات</li>
+          <li><i class="fas fa-check-circle"></i> تحميل النتائج كملف CSV</li>
+          <li><i class="fas fa-check-circle"></i> معالجة عدة مرضى معاً</li>
+        </ul>
+        <button
+          class="btn-method"
+          onclick="navigateTo('{{ url_for('batch_predict_page') }}')"
+        >
+          <i class="fas fa-cloud-upload-alt me-2"></i> رفع ملف والتنبؤ الجماعي
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Divider -->
+  <div class="divider-text" data-aos="fade-up">
+    <span><i class="fas fa-info-circle me-2"></i>معلومات مهمة قبل البدء</span>
+  </div>
+
+  <!-- Information Cards -->
+  <div class="info-section" data-aos="fade-up" data-aos-delay="400">
+    <h4 class="text-center">
+      <i class="fas fa-lightbulb me-2" style="color: #f39c12"></i>ما الذي تحتاج
+      معرفته؟
+    </h4>
+    <div class="info-cards">
+      <div class="info-card">
+        <div class="info-icon">📋</div>
+        <h6>البيانات المطلوبة</h6>
+        <p>
+          تختلف الميزات المطلوبة حسب النموذج المختار (4 أو 8 أو 11 ميزة سريرية)
+        </p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">🎯</div>
+        <h6>دقة النماذج</h6>
+        <p>نماذجنا تحقق دقة عالية باستخدام أحدث تقنيات التعلم الآلي</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">📁</div>
+        <h6>تنسيق الملفات</h6>
+        <p>
+          للملفات: يجب أن تحتوي على أعمدة بأسماء الميزات الإنجليزية المطلوبة
+        </p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">⚠️</div>
+        <h6>تنبيه طبي</h6>
+        <p>هذه الأداة مساعدة فقط ولا تغني عن مراجعة وقرار الطبيب</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="text-center mt-5" data-aos="fade-up" data-aos-delay="600">
+    <div class="d-flex justify-content-center gap-3 flex-wrap">
+      <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg px-4">
+        <i class="fas fa-stethoscope me-2"></i> تشخيص سريع
+      </a>
+      <a
+        href="{{ url_for('batch_predict_page') }}"
+        class="btn btn-warning btn-lg px-4 text-white"
+      >
+        <i class="fas fa-upload me-2"></i> تنبؤ جماعي
+      </a>
+      <a
+        href="{{ url_for('dashboard') }}"
+        class="btn btn-outline-info btn-lg px-4"
+      >
+        <i class="fas fa-chart-line me-2"></i> لوحة التحكم
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %} {% block extra_js %}
+<script src="{{ url_for('static', filename='js/clinical.js') }}"></script>
+{% endblock %}
