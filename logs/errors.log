@@ -1,0 +1,1392 @@
+2026-08-05 12:48:08 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - name 'Setting' is not defined
+2026-08-05 12:48:08 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\settings_routes.py", line 155, in update_settings
+    setting = Setting.query.filter_by(key=key).first()
+              ^^^^^^^
+NameError: name 'Setting' is not defined
+
+2026-08-05 12:48:08 - __main__ - ERROR - ⏱️ POST /api/settings → 500 (9.52ms) [ID: b0dc962d]
+2026-08-05 12:48:22 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - name 'Setting' is not defined
+2026-08-05 12:48:22 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\settings_routes.py", line 155, in update_settings
+    setting = Setting.query.filter_by(key=key).first()
+              ^^^^^^^
+NameError: name 'Setting' is not defined
+
+2026-08-05 12:48:22 - __main__ - ERROR - ⏱️ POST /api/settings → 500 (4.96ms) [ID: 0c22d4df]
+2026-08-05 16:05:19 - infrastructure.database - ERROR - Database initialization failed: Not an executable object: 'PRAGMA foreign_keys = ON'
+2026-08-05 16:08:43 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - (sqlite3.OperationalError) no such column: reports.patient_id
+[SQL: SELECT reports.id AS reports_id, reports.report_uid AS reports_report_uid, reports.template_id AS reports_template_id, reports.patient_uid AS reports_patient_uid, reports.patient_id AS reports_patient_id, reports.data_json AS reports_data_json, reports.pdf_path AS reports_pdf_path, reports.created_at AS reports_created_at, reports.updated_at AS reports_updated_at 
+FROM reports 
+WHERE ? = reports.template_id]
+[parameters: (2,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-08-05 16:09:16 - business.services.data_service - ERROR - Failed to save CSV: name 'uuid' is not defined
+2026-08-05 16:09:16 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - name 'uuid' is not defined
+2026-08-05 16:09:16 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\prediction_routes.py", line 318, in save_patient
+    patient_id = data_service.save_patient_data(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\business\services\data_service.py", line 232, in save_patient_data
+    self._save_to_csv(patient_data, prediction, probability, model_name, model_features)
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\business\services\data_service.py", line 246, in _save_to_csv
+    'patient_id': str(uuid.uuid4())[:8],
+                      ^^^^
+NameError: name 'uuid' is not defined
+
+2026-08-05 16:09:16 - __main__ - ERROR - ⏱️ POST /api/save-patient → 500 (52.03ms) [ID: 6c26a8eb]
+2026-08-05 19:58:13 - infrastructure.database - ERROR - Database initialization failed: Not an executable object: 'PRAGMA foreign_keys = ON'
+2026-08-05 20:01:50 - business.services.prediction_service - ERROR - Prediction failed for minimal: X has 4 features, but StandardScaler is expecting 11 features as input.
+2026-08-05 20:01:50 - application.exceptions.handlers - ERROR - Exception: MODEL_LOAD_ERROR - فشل تحميل النموذج 'minimal': X has 4 features, but StandardScaler is expecting 11 features as input.
+2026-08-05 20:02:01 - business.services.prediction_service - ERROR - Prediction failed for minimal: X has 4 features, but StandardScaler is expecting 11 features as input.
+2026-08-05 20:02:01 - application.exceptions.handlers - ERROR - Exception: MODEL_LOAD_ERROR - فشل تحميل النموذج 'minimal': X has 4 features, but StandardScaler is expecting 11 features as input.
+2026-08-05 20:02:37 - application.exceptions.handlers - ERROR - Exception: INVALID_FILE_TYPE - نوع الملف 'download.jfif' غير مسموح. الأنواع المسموحة: .png, .jpg, .jpeg, .bmp, .tiff
+2026-08-05 20:02:37 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\ecg_routes.py", line 49, in predict_ecg_api
+    raise InvalidFileTypeError(
+application.exceptions.custom_exceptions.InvalidFileTypeError: نوع الملف 'download.jfif' غير مسموح. الأنواع المسموحة: .png, .jpg, .jpeg, .bmp, .tiff
+
+2026-08-05 20:02:59 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - (sqlite3.OperationalError) no such column: reports.patient_id
+[SQL: SELECT reports.id AS reports_id, reports.report_uid AS reports_report_uid, reports.template_id AS reports_template_id, reports.patient_uid AS reports_patient_uid, reports.patient_id AS reports_patient_id, reports.data_json AS reports_data_json, reports.pdf_path AS reports_pdf_path, reports.created_at AS reports_created_at, reports.updated_at AS reports_updated_at 
+FROM reports 
+WHERE ? = reports.template_id]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-08-05 20:03:07 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - (sqlite3.OperationalError) no such column: reports.patient_id
+[SQL: SELECT reports.id AS reports_id, reports.report_uid AS reports_report_uid, reports.template_id AS reports_template_id, reports.patient_uid AS reports_patient_uid, reports.patient_id AS reports_patient_id, reports.data_json AS reports_data_json, reports.pdf_path AS reports_pdf_path, reports.created_at AS reports_created_at, reports.updated_at AS reports_updated_at 
+FROM reports 
+WHERE ? = reports.template_id]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-08-05 21:41:14 - application.exceptions.handlers - ERROR - Exception: INVALID_FILE_TYPE - نوع الملف 'download.jfif' غير مسموح. الأنواع المسموحة: .png, .jpg, .jpeg, .bmp, .tiff
+2026-08-05 21:41:14 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\ecg_routes.py", line 49, in predict_ecg_api
+    raise InvalidFileTypeError(
+application.exceptions.custom_exceptions.InvalidFileTypeError: نوع الملف 'download.jfif' غير مسموح. الأنواع المسموحة: .png, .jpg, .jpeg, .bmp, .tiff
+
+2026-08-05 21:44:27 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - (sqlite3.OperationalError) no such column: reports.patient_id
+[SQL: SELECT reports.id AS reports_id, reports.report_uid AS reports_report_uid, reports.template_id AS reports_template_id, reports.patient_uid AS reports_patient_uid, reports.patient_id AS reports_patient_id, reports.data_json AS reports_data_json, reports.pdf_path AS reports_pdf_path, reports.created_at AS reports_created_at, reports.updated_at AS reports_updated_at 
+FROM reports 
+WHERE ? = reports.template_id]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-08-05 21:44:33 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - (sqlite3.OperationalError) no such column: reports.patient_id
+[SQL: SELECT reports.id AS reports_id, reports.report_uid AS reports_report_uid, reports.template_id AS reports_template_id, reports.patient_uid AS reports_patient_uid, reports.patient_id AS reports_patient_id, reports.data_json AS reports_data_json, reports.pdf_path AS reports_pdf_path, reports.created_at AS reports_created_at, reports.updated_at AS reports_updated_at 
+FROM reports 
+WHERE ? = reports.template_id]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-08-05 21:47:20 - application.exceptions.handlers - ERROR - Exception: INVALID_FILE_TYPE - نوع الملف 'images (5).jfif' غير مسموح. الأنواع المسموحة: .png, .jpg, .jpeg, .bmp, .tiff
+2026-08-05 21:47:20 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\ecg_routes.py", line 49, in predict_ecg_api
+    raise InvalidFileTypeError(
+application.exceptions.custom_exceptions.InvalidFileTypeError: نوع الملف 'images (5).jfif' غير مسموح. الأنواع المسموحة: .png, .jpg, .jpeg, .bmp, .tiff
+
+2026-08-05 21:48:22 - business.services.prediction_service - ERROR - Prediction failed for top8: X has 8 features, but StandardScaler is expecting 11 features as input.
+2026-08-05 21:48:22 - application.exceptions.handlers - ERROR - Exception: MODEL_LOAD_ERROR - فشل تحميل النموذج 'top8': X has 8 features, but StandardScaler is expecting 11 features as input.
+2026-08-05 21:48:28 - business.services.prediction_service - ERROR - Prediction failed for top8: X has 8 features, but StandardScaler is expecting 11 features as input.
+2026-08-05 21:48:28 - application.exceptions.handlers - ERROR - Exception: MODEL_LOAD_ERROR - فشل تحميل النموذج 'top8': X has 8 features, but StandardScaler is expecting 11 features as input.
+2026-08-05 21:48:34 - business.services.prediction_service - ERROR - Prediction failed for top8: X has 8 features, but StandardScaler is expecting 11 features as input.
+2026-08-05 21:48:34 - application.exceptions.handlers - ERROR - Exception: MODEL_LOAD_ERROR - فشل تحميل النموذج 'top8': X has 8 features, but StandardScaler is expecting 11 features as input.
+2026-08-05 21:48:34 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\business\services\prediction_service.py", line 287, in predict_with_strategy
+    prediction, probability = strategy.predict(patient_data)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\business\strategies\model_strategy.py", line 55, in predict
+    X_scaled = self.scaler.transform(X)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\utils\_set_output.py", line 319, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\preprocessing\_data.py", line 1062, in transform
+    X = validate_data(
+        ^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\utils\validation.py", line 2965, in validate_data
+    _check_n_features(_estimator, X, reset=reset)
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\utils\validation.py", line 2829, in _check_n_features
+    raise ValueError(
+ValueError: X has 8 features, but StandardScaler is expecting 11 features as input.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\prediction_routes.py", line 34, in predict
+    prediction, probability = prediction_service.predict_with_strategy(model_name, data)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\business\services\prediction_service.py", line 291, in predict_with_strategy
+    raise ModelLoadError(model_name, str(e))
+application.exceptions.custom_exceptions.ModelLoadError: فشل تحميل النموذج 'top8': X has 8 features, but StandardScaler is expecting 11 features as input.
+
+2026-08-05 21:51:09 - business.services.prediction_service - ERROR - Prediction failed for top8: X has 8 features, but StandardScaler is expecting 11 features as input.
+2026-08-05 21:51:09 - application.exceptions.handlers - ERROR - Exception: MODEL_LOAD_ERROR - فشل تحميل النموذج 'top8': X has 8 features, but StandardScaler is expecting 11 features as input.
+2026-08-05 21:51:09 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\business\services\prediction_service.py", line 287, in predict_with_strategy
+    prediction, probability = strategy.predict(patient_data)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\business\strategies\model_strategy.py", line 55, in predict
+    X_scaled = self.scaler.transform(X)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\utils\_set_output.py", line 319, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\preprocessing\_data.py", line 1062, in transform
+    X = validate_data(
+        ^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\utils\validation.py", line 2965, in validate_data
+    _check_n_features(_estimator, X, reset=reset)
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\utils\validation.py", line 2829, in _check_n_features
+    raise ValueError(
+ValueError: X has 8 features, but StandardScaler is expecting 11 features as input.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\prediction_routes.py", line 34, in predict
+    prediction, probability = prediction_service.predict_with_strategy(model_name, data)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\business\services\prediction_service.py", line 291, in predict_with_strategy
+    raise ModelLoadError(model_name, str(e))
+application.exceptions.custom_exceptions.ModelLoadError: فشل تحميل النموذج 'top8': X has 8 features, but StandardScaler is expecting 11 features as input.
+
+2026-08-05 21:51:09 - __main__ - ERROR - ⏱️ POST /predict/top8 → 500 (21.29ms) [ID: f6a36ad4]
+2026-08-05 21:51:26 - business.services.prediction_service - ERROR - Prediction failed for minimal: X has 4 features, but StandardScaler is expecting 11 features as input.
+2026-08-05 21:51:26 - application.exceptions.handlers - ERROR - Exception: MODEL_LOAD_ERROR - فشل تحميل النموذج 'minimal': X has 4 features, but StandardScaler is expecting 11 features as input.
+2026-08-05 21:51:26 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\business\services\prediction_service.py", line 287, in predict_with_strategy
+    prediction, probability = strategy.predict(patient_data)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\business\strategies\model_strategy.py", line 34, in predict
+    X_scaled = self.scaler.transform(X)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\utils\_set_output.py", line 319, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\preprocessing\_data.py", line 1062, in transform
+    X = validate_data(
+        ^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\utils\validation.py", line 2965, in validate_data
+    _check_n_features(_estimator, X, reset=reset)
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sklearn\utils\validation.py", line 2829, in _check_n_features
+    raise ValueError(
+ValueError: X has 4 features, but StandardScaler is expecting 11 features as input.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\prediction_routes.py", line 34, in predict
+    prediction, probability = prediction_service.predict_with_strategy(model_name, data)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\business\services\prediction_service.py", line 291, in predict_with_strategy
+    raise ModelLoadError(model_name, str(e))
+application.exceptions.custom_exceptions.ModelLoadError: فشل تحميل النموذج 'minimal': X has 4 features, but StandardScaler is expecting 11 features as input.
+
+2026-08-05 21:51:26 - __main__ - ERROR - ⏱️ POST /predict/minimal → 500 (0.00ms) [ID: 11c98443]
+2026-08-05 21:52:31 - business.services.prediction_service - ERROR - Prediction failed for top8: X has 8 features, but StandardScaler is expecting 11 features as input.
+2026-08-05 21:52:31 - business.services.prediction_service - ERROR - Batch prediction error at row 1: فشل تحميل النموذج 'top8': X has 8 features, but StandardScaler is expecting 11 features as input.
+2026-08-05 21:52:31 - business.services.prediction_service - ERROR - Prediction failed for top8: X has 8 features, but StandardScaler is expecting 11 features as input.
+2026-08-05 21:52:31 - business.services.prediction_service - ERROR - Batch prediction error at row 2: فشل تحميل النموذج 'top8': X has 8 features, but StandardScaler is expecting 11 features as input.
+2026-08-05 21:52:31 - business.services.prediction_service - ERROR - Prediction failed for top8: X has 8 features, but StandardScaler is expecting 11 features as input.
+2026-08-05 21:52:31 - business.services.prediction_service - ERROR - Batch prediction error at row 3: فشل تحميل النموذج 'top8': X has 8 features, but StandardScaler is expecting 11 features as input.
+2026-08-05 21:52:31 - business.services.prediction_service - ERROR - Prediction failed for top8: X has 8 features, but StandardScaler is expecting 11 features as input.
+2026-08-05 21:52:31 - business.services.prediction_service - ERROR - Batch prediction error at row 4: فشل تحميل النموذج 'top8': X has 8 features, but StandardScaler is expecting 11 features as input.
+2026-08-05 21:52:31 - business.services.prediction_service - ERROR - Prediction failed for top8: X has 8 features, but StandardScaler is expecting 11 features as input.
+2026-08-05 21:52:31 - business.services.prediction_service - ERROR - Batch prediction error at row 5: فشل تحميل النموذج 'top8': X has 8 features, but StandardScaler is expecting 11 features as input.
+2026-08-05 22:06:05 - application.exceptions.handlers - ERROR - Exception: INVALID_FILE_TYPE - نوع الملف 'download.jfif' غير مسموح. الأنواع المسموحة: .png, .jpg, .jpeg, .bmp, .tiff
+2026-08-05 22:06:05 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\ecg_routes.py", line 49, in predict_ecg_api
+    raise InvalidFileTypeError(
+application.exceptions.custom_exceptions.InvalidFileTypeError: نوع الملف 'download.jfif' غير مسموح. الأنواع المسموحة: .png, .jpg, .jpeg, .bmp, .tiff
+
+2026-08-05 22:06:24 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - (sqlite3.OperationalError) no such column: reports.patient_id
+[SQL: SELECT reports.id AS reports_id, reports.report_uid AS reports_report_uid, reports.template_id AS reports_template_id, reports.patient_uid AS reports_patient_uid, reports.patient_id AS reports_patient_id, reports.data_json AS reports_data_json, reports.pdf_path AS reports_pdf_path, reports.created_at AS reports_created_at, reports.updated_at AS reports_updated_at 
+FROM reports 
+WHERE ? = reports.template_id]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-08-05 22:16:41 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - (sqlite3.OperationalError) no such column: reports.patient_id
+[SQL: SELECT reports.id AS reports_id, reports.report_uid AS reports_report_uid, reports.template_id AS reports_template_id, reports.patient_uid AS reports_patient_uid, reports.patient_id AS reports_patient_id, reports.data_json AS reports_data_json, reports.pdf_path AS reports_pdf_path, reports.created_at AS reports_created_at, reports.updated_at AS reports_updated_at 
+FROM reports 
+WHERE ? = reports.template_id]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-08-05 22:16:41 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: reports.patient_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\report_routes.py", line 85, in api_get_templates
+    templates = report_service.get_all_templates(category)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\business\services\report_service.py", line 67, in get_all_templates
+    return [TemplateDTO.from_model(t).to_dict() for t in templates]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\business\services\report_service.py", line 67, in <listcomp>
+    return [TemplateDTO.from_model(t).to_dict() for t in templates]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\dtos\template_dto.py", line 30, in from_model
+    report_count=template.report_count,
+                 ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\infrastructure\database.py", line 233, in report_count
+    return len(self.reports)
+               ^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 569, in __get__
+    return self.impl.get(state, dict_)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 1096, in get
+    value = self._fire_loader_callables(state, key, passive)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 1131, in _fire_loader_callables
+    return self.callable_(state, passive)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\strategies.py", line 978, in _load_for_state
+    return self._emit_lazyload(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\strategies.py", line 1141, in _emit_lazyload
+    result = session.execute(
+             ^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\session.py", line 2373, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\session.py", line 2271, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: reports.patient_id
+[SQL: SELECT reports.id AS reports_id, reports.report_uid AS reports_report_uid, reports.template_id AS reports_template_id, reports.patient_uid AS reports_patient_uid, reports.patient_id AS reports_patient_id, reports.data_json AS reports_data_json, reports.pdf_path AS reports_pdf_path, reports.created_at AS reports_created_at, reports.updated_at AS reports_updated_at 
+FROM reports 
+WHERE ? = reports.template_id]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+2026-08-05 22:16:46 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - (sqlite3.OperationalError) no such column: reports.patient_id
+[SQL: SELECT reports.id AS reports_id, reports.report_uid AS reports_report_uid, reports.template_id AS reports_template_id, reports.patient_uid AS reports_patient_uid, reports.patient_id AS reports_patient_id, reports.data_json AS reports_data_json, reports.pdf_path AS reports_pdf_path, reports.created_at AS reports_created_at, reports.updated_at AS reports_updated_at 
+FROM reports 
+WHERE ? = reports.template_id]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-08-05 22:16:46 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: reports.patient_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\report_routes.py", line 85, in api_get_templates
+    templates = report_service.get_all_templates(category)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\business\services\report_service.py", line 67, in get_all_templates
+    return [TemplateDTO.from_model(t).to_dict() for t in templates]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\business\services\report_service.py", line 67, in <listcomp>
+    return [TemplateDTO.from_model(t).to_dict() for t in templates]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\dtos\template_dto.py", line 30, in from_model
+    report_count=template.report_count,
+                 ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\infrastructure\database.py", line 233, in report_count
+    return len(self.reports)
+               ^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 569, in __get__
+    return self.impl.get(state, dict_)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 1096, in get
+    value = self._fire_loader_callables(state, key, passive)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 1131, in _fire_loader_callables
+    return self.callable_(state, passive)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\strategies.py", line 978, in _load_for_state
+    return self._emit_lazyload(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\strategies.py", line 1141, in _emit_lazyload
+    result = session.execute(
+             ^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\session.py", line 2373, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\session.py", line 2271, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: reports.patient_id
+[SQL: SELECT reports.id AS reports_id, reports.report_uid AS reports_report_uid, reports.template_id AS reports_template_id, reports.patient_uid AS reports_patient_uid, reports.patient_id AS reports_patient_id, reports.data_json AS reports_data_json, reports.pdf_path AS reports_pdf_path, reports.created_at AS reports_created_at, reports.updated_at AS reports_updated_at 
+FROM reports 
+WHERE ? = reports.template_id]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+2026-08-05 22:16:46 - __main__ - ERROR - ⏱️ GET /api/templates → 500 (61.54ms) [ID: 94528ba2]
+2026-08-05 22:16:47 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - (sqlite3.OperationalError) no such column: reports.patient_id
+[SQL: SELECT reports.id AS reports_id, reports.report_uid AS reports_report_uid, reports.template_id AS reports_template_id, reports.patient_uid AS reports_patient_uid, reports.patient_id AS reports_patient_id, reports.data_json AS reports_data_json, reports.pdf_path AS reports_pdf_path, reports.created_at AS reports_created_at, reports.updated_at AS reports_updated_at 
+FROM reports 
+WHERE ? = reports.template_id]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-08-05 22:16:47 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: reports.patient_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\report_routes.py", line 85, in api_get_templates
+    templates = report_service.get_all_templates(category)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\business\services\report_service.py", line 67, in get_all_templates
+    return [TemplateDTO.from_model(t).to_dict() for t in templates]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\business\services\report_service.py", line 67, in <listcomp>
+    return [TemplateDTO.from_model(t).to_dict() for t in templates]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\dtos\template_dto.py", line 30, in from_model
+    report_count=template.report_count,
+                 ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\infrastructure\database.py", line 233, in report_count
+    return len(self.reports)
+               ^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 569, in __get__
+    return self.impl.get(state, dict_)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 1096, in get
+    value = self._fire_loader_callables(state, key, passive)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 1131, in _fire_loader_callables
+    return self.callable_(state, passive)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\strategies.py", line 978, in _load_for_state
+    return self._emit_lazyload(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\strategies.py", line 1141, in _emit_lazyload
+    result = session.execute(
+             ^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\session.py", line 2373, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\session.py", line 2271, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: reports.patient_id
+[SQL: SELECT reports.id AS reports_id, reports.report_uid AS reports_report_uid, reports.template_id AS reports_template_id, reports.patient_uid AS reports_patient_uid, reports.patient_id AS reports_patient_id, reports.data_json AS reports_data_json, reports.pdf_path AS reports_pdf_path, reports.created_at AS reports_created_at, reports.updated_at AS reports_updated_at 
+FROM reports 
+WHERE ? = reports.template_id]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+2026-08-05 22:16:47 - __main__ - ERROR - ⏱️ GET /api/templates → 500 (11.17ms) [ID: 021cc902]
+2026-08-05 22:16:49 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - Unexpected end of template. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+2026-08-05 22:16:54 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - Unexpected end of template. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+2026-08-05 22:16:54 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\report_routes.py", line 32, in template_builder_page
+    return render_template('reports/template_builder.html', field_types=field_types)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\templating.py", line 150, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\presentation\templates\reports\template_builder.html", line 546, in template
+    {% endif %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+
+2026-08-05 22:16:59 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - Unexpected end of template. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+2026-08-05 22:16:59 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - Unexpected end of template. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+2026-08-05 22:16:59 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\report_routes.py", line 32, in template_builder_page
+    return render_template('reports/template_builder.html', field_types=field_types)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\templating.py", line 150, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\presentation\templates\reports\template_builder.html", line 546, in template
+    {% endif %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+
+2026-08-05 22:16:59 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\report_routes.py", line 32, in template_builder_page
+    return render_template('reports/template_builder.html', field_types=field_types)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\templating.py", line 150, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\presentation\templates\reports\template_builder.html", line 546, in template
+    {% endif %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+
+2026-08-05 22:16:59 - __main__ - ERROR - ⏱️ GET /reports/builder → 500 (67.65ms) [ID: 20a8f212]
+2026-08-05 22:16:59 - __main__ - ERROR - ⏱️ GET /reports/builder → 500 (69.65ms) [ID: 8f46bc2d]
+2026-08-05 22:17:18 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - (sqlite3.OperationalError) no such column: reports.patient_id
+[SQL: SELECT reports.id AS reports_id, reports.report_uid AS reports_report_uid, reports.template_id AS reports_template_id, reports.patient_uid AS reports_patient_uid, reports.patient_id AS reports_patient_id, reports.data_json AS reports_data_json, reports.pdf_path AS reports_pdf_path, reports.created_at AS reports_created_at, reports.updated_at AS reports_updated_at 
+FROM reports 
+WHERE ? = reports.template_id]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-08-05 22:17:18 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: reports.patient_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\report_routes.py", line 85, in api_get_templates
+    templates = report_service.get_all_templates(category)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\business\services\report_service.py", line 67, in get_all_templates
+    return [TemplateDTO.from_model(t).to_dict() for t in templates]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\business\services\report_service.py", line 67, in <listcomp>
+    return [TemplateDTO.from_model(t).to_dict() for t in templates]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\dtos\template_dto.py", line 30, in from_model
+    report_count=template.report_count,
+                 ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\infrastructure\database.py", line 233, in report_count
+    return len(self.reports)
+               ^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 569, in __get__
+    return self.impl.get(state, dict_)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 1096, in get
+    value = self._fire_loader_callables(state, key, passive)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 1131, in _fire_loader_callables
+    return self.callable_(state, passive)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\strategies.py", line 978, in _load_for_state
+    return self._emit_lazyload(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\strategies.py", line 1141, in _emit_lazyload
+    result = session.execute(
+             ^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\session.py", line 2373, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\session.py", line 2271, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: reports.patient_id
+[SQL: SELECT reports.id AS reports_id, reports.report_uid AS reports_report_uid, reports.template_id AS reports_template_id, reports.patient_uid AS reports_patient_uid, reports.patient_id AS reports_patient_id, reports.data_json AS reports_data_json, reports.pdf_path AS reports_pdf_path, reports.created_at AS reports_created_at, reports.updated_at AS reports_updated_at 
+FROM reports 
+WHERE ? = reports.template_id]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+2026-08-05 22:17:18 - __main__ - ERROR - ⏱️ GET /api/templates → 500 (22.23ms) [ID: b343aa1a]
+2026-08-05 22:17:20 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - Unexpected end of template. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+2026-08-05 22:17:20 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\report_routes.py", line 32, in template_builder_page
+    return render_template('reports/template_builder.html', field_types=field_types)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\templating.py", line 150, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\presentation\templates\reports\template_builder.html", line 546, in template
+    {% endif %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+
+2026-08-05 22:17:20 - __main__ - ERROR - ⏱️ GET /reports/builder → 500 (16.69ms) [ID: 8c2d3515]
+2026-08-05 22:21:17 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - (sqlite3.OperationalError) no such column: reports.patient_id
+[SQL: SELECT reports.id AS reports_id, reports.report_uid AS reports_report_uid, reports.template_id AS reports_template_id, reports.patient_uid AS reports_patient_uid, reports.patient_id AS reports_patient_id, reports.data_json AS reports_data_json, reports.pdf_path AS reports_pdf_path, reports.created_at AS reports_created_at, reports.updated_at AS reports_updated_at 
+FROM reports 
+WHERE ? = reports.template_id]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-08-05 22:21:17 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: reports.patient_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\report_routes.py", line 85, in api_get_templates
+    templates = report_service.get_all_templates(category)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\business\services\report_service.py", line 67, in get_all_templates
+    return [TemplateDTO.from_model(t).to_dict() for t in templates]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\business\services\report_service.py", line 67, in <listcomp>
+    return [TemplateDTO.from_model(t).to_dict() for t in templates]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\dtos\template_dto.py", line 30, in from_model
+    report_count=template.report_count,
+                 ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\infrastructure\database.py", line 233, in report_count
+    return len(self.reports)
+               ^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 569, in __get__
+    return self.impl.get(state, dict_)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 1096, in get
+    value = self._fire_loader_callables(state, key, passive)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 1131, in _fire_loader_callables
+    return self.callable_(state, passive)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\strategies.py", line 978, in _load_for_state
+    return self._emit_lazyload(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\strategies.py", line 1141, in _emit_lazyload
+    result = session.execute(
+             ^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\session.py", line 2373, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\session.py", line 2271, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: reports.patient_id
+[SQL: SELECT reports.id AS reports_id, reports.report_uid AS reports_report_uid, reports.template_id AS reports_template_id, reports.patient_uid AS reports_patient_uid, reports.patient_id AS reports_patient_id, reports.data_json AS reports_data_json, reports.pdf_path AS reports_pdf_path, reports.created_at AS reports_created_at, reports.updated_at AS reports_updated_at 
+FROM reports 
+WHERE ? = reports.template_id]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+2026-08-05 22:21:17 - __main__ - ERROR - ⏱️ GET /api/templates → 500 (50.51ms) [ID: 06770872]
+2026-08-05 22:22:30 - business.services.report_service - ERROR - Failed to create template: (sqlite3.OperationalError) no such column: reports.patient_id
+[SQL: SELECT reports.id AS reports_id, reports.report_uid AS reports_report_uid, reports.template_id AS reports_template_id, reports.patient_uid AS reports_patient_uid, reports.patient_id AS reports_patient_id, reports.data_json AS reports_data_json, reports.pdf_path AS reports_pdf_path, reports.created_at AS reports_created_at, reports.updated_at AS reports_updated_at 
+FROM reports 
+WHERE ? = reports.template_id]
+[parameters: (3,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-08-05 22:22:30 - application.exceptions.handlers - ERROR - Exception: DATABASE_ERROR - خطأ في قاعدة البيانات: فشل إنشاء القالب: (sqlite3.OperationalError) no such column: reports.patient_id
+[SQL: SELECT reports.id AS reports_id, reports.report_uid AS reports_report_uid, reports.template_id AS reports_template_id, reports.patient_uid AS reports_patient_uid, reports.patient_id AS reports_patient_id, reports.data_json AS reports_data_json, reports.pdf_path AS reports_pdf_path, reports.created_at AS reports_created_at, reports.updated_at AS reports_updated_at 
+FROM reports 
+WHERE ? = reports.template_id]
+[parameters: (3,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-08-05 22:22:30 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: reports.patient_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\business\services\report_service.py", line 56, in create_template
+    return {'success': True, 'template': TemplateDTO.from_model(saved).to_dict()}
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\dtos\template_dto.py", line 30, in from_model
+    report_count=template.report_count,
+                 ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\infrastructure\database.py", line 233, in report_count
+    return len(self.reports)
+               ^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 569, in __get__
+    return self.impl.get(state, dict_)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 1096, in get
+    value = self._fire_loader_callables(state, key, passive)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 1131, in _fire_loader_callables
+    return self.callable_(state, passive)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\strategies.py", line 978, in _load_for_state
+    return self._emit_lazyload(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\strategies.py", line 1141, in _emit_lazyload
+    result = session.execute(
+             ^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\session.py", line 2373, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\session.py", line 2271, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: reports.patient_id
+[SQL: SELECT reports.id AS reports_id, reports.report_uid AS reports_report_uid, reports.template_id AS reports_template_id, reports.patient_uid AS reports_patient_uid, reports.patient_id AS reports_patient_id, reports.data_json AS reports_data_json, reports.pdf_path AS reports_pdf_path, reports.created_at AS reports_created_at, reports.updated_at AS reports_updated_at 
+FROM reports 
+WHERE ? = reports.template_id]
+[parameters: (3,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\report_routes.py", line 95, in api_create_template
+    result = report_service.create_template(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\business\services\report_service.py", line 59, in create_template
+    raise DatabaseError(f"فشل إنشاء القالب: {str(e)}")
+application.exceptions.custom_exceptions.DatabaseError: خطأ في قاعدة البيانات: فشل إنشاء القالب: (sqlite3.OperationalError) no such column: reports.patient_id
+[SQL: SELECT reports.id AS reports_id, reports.report_uid AS reports_report_uid, reports.template_id AS reports_template_id, reports.patient_uid AS reports_patient_uid, reports.patient_id AS reports_patient_id, reports.data_json AS reports_data_json, reports.pdf_path AS reports_pdf_path, reports.created_at AS reports_created_at, reports.updated_at AS reports_updated_at 
+FROM reports 
+WHERE ? = reports.template_id]
+[parameters: (3,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+2026-08-05 22:22:30 - __main__ - ERROR - ⏱️ POST /api/templates → 500 (107.14ms) [ID: 03fef593]
+2026-08-05 22:23:54 - business.services.report_service - ERROR - Failed to create template: (sqlite3.OperationalError) no such column: reports.patient_id
+[SQL: SELECT reports.id AS reports_id, reports.report_uid AS reports_report_uid, reports.template_id AS reports_template_id, reports.patient_uid AS reports_patient_uid, reports.patient_id AS reports_patient_id, reports.data_json AS reports_data_json, reports.pdf_path AS reports_pdf_path, reports.created_at AS reports_created_at, reports.updated_at AS reports_updated_at 
+FROM reports 
+WHERE ? = reports.template_id]
+[parameters: (4,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-08-05 22:23:54 - application.exceptions.handlers - ERROR - Exception: DATABASE_ERROR - خطأ في قاعدة البيانات: فشل إنشاء القالب: (sqlite3.OperationalError) no such column: reports.patient_id
+[SQL: SELECT reports.id AS reports_id, reports.report_uid AS reports_report_uid, reports.template_id AS reports_template_id, reports.patient_uid AS reports_patient_uid, reports.patient_id AS reports_patient_id, reports.data_json AS reports_data_json, reports.pdf_path AS reports_pdf_path, reports.created_at AS reports_created_at, reports.updated_at AS reports_updated_at 
+FROM reports 
+WHERE ? = reports.template_id]
+[parameters: (4,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-08-05 22:23:54 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: reports.patient_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\business\services\report_service.py", line 56, in create_template
+    return {'success': True, 'template': TemplateDTO.from_model(saved).to_dict()}
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\dtos\template_dto.py", line 30, in from_model
+    report_count=template.report_count,
+                 ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\infrastructure\database.py", line 233, in report_count
+    return len(self.reports)
+               ^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 569, in __get__
+    return self.impl.get(state, dict_)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 1096, in get
+    value = self._fire_loader_callables(state, key, passive)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 1131, in _fire_loader_callables
+    return self.callable_(state, passive)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\strategies.py", line 978, in _load_for_state
+    return self._emit_lazyload(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\strategies.py", line 1141, in _emit_lazyload
+    result = session.execute(
+             ^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\session.py", line 2373, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\session.py", line 2271, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: reports.patient_id
+[SQL: SELECT reports.id AS reports_id, reports.report_uid AS reports_report_uid, reports.template_id AS reports_template_id, reports.patient_uid AS reports_patient_uid, reports.patient_id AS reports_patient_id, reports.data_json AS reports_data_json, reports.pdf_path AS reports_pdf_path, reports.created_at AS reports_created_at, reports.updated_at AS reports_updated_at 
+FROM reports 
+WHERE ? = reports.template_id]
+[parameters: (4,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\report_routes.py", line 95, in api_create_template
+    result = report_service.create_template(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\business\services\report_service.py", line 59, in create_template
+    raise DatabaseError(f"فشل إنشاء القالب: {str(e)}")
+application.exceptions.custom_exceptions.DatabaseError: خطأ في قاعدة البيانات: فشل إنشاء القالب: (sqlite3.OperationalError) no such column: reports.patient_id
+[SQL: SELECT reports.id AS reports_id, reports.report_uid AS reports_report_uid, reports.template_id AS reports_template_id, reports.patient_uid AS reports_patient_uid, reports.patient_id AS reports_patient_id, reports.data_json AS reports_data_json, reports.pdf_path AS reports_pdf_path, reports.created_at AS reports_created_at, reports.updated_at AS reports_updated_at 
+FROM reports 
+WHERE ? = reports.template_id]
+[parameters: (4,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+2026-08-05 22:23:54 - __main__ - ERROR - ⏱️ POST /api/templates → 500 (55.92ms) [ID: 2f294ed0]
+2026-08-05 22:24:04 - business.services.report_service - ERROR - Failed to create template: (sqlite3.OperationalError) no such column: reports.patient_id
+[SQL: SELECT reports.id AS reports_id, reports.report_uid AS reports_report_uid, reports.template_id AS reports_template_id, reports.patient_uid AS reports_patient_uid, reports.patient_id AS reports_patient_id, reports.data_json AS reports_data_json, reports.pdf_path AS reports_pdf_path, reports.created_at AS reports_created_at, reports.updated_at AS reports_updated_at 
+FROM reports 
+WHERE ? = reports.template_id]
+[parameters: (5,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-08-05 22:24:04 - application.exceptions.handlers - ERROR - Exception: DATABASE_ERROR - خطأ في قاعدة البيانات: فشل إنشاء القالب: (sqlite3.OperationalError) no such column: reports.patient_id
+[SQL: SELECT reports.id AS reports_id, reports.report_uid AS reports_report_uid, reports.template_id AS reports_template_id, reports.patient_uid AS reports_patient_uid, reports.patient_id AS reports_patient_id, reports.data_json AS reports_data_json, reports.pdf_path AS reports_pdf_path, reports.created_at AS reports_created_at, reports.updated_at AS reports_updated_at 
+FROM reports 
+WHERE ? = reports.template_id]
+[parameters: (5,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-08-05 22:24:04 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: reports.patient_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\business\services\report_service.py", line 56, in create_template
+    return {'success': True, 'template': TemplateDTO.from_model(saved).to_dict()}
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\dtos\template_dto.py", line 30, in from_model
+    report_count=template.report_count,
+                 ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\infrastructure\database.py", line 233, in report_count
+    return len(self.reports)
+               ^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 569, in __get__
+    return self.impl.get(state, dict_)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 1096, in get
+    value = self._fire_loader_callables(state, key, passive)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 1131, in _fire_loader_callables
+    return self.callable_(state, passive)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\strategies.py", line 978, in _load_for_state
+    return self._emit_lazyload(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\strategies.py", line 1141, in _emit_lazyload
+    result = session.execute(
+             ^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\session.py", line 2373, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\session.py", line 2271, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: reports.patient_id
+[SQL: SELECT reports.id AS reports_id, reports.report_uid AS reports_report_uid, reports.template_id AS reports_template_id, reports.patient_uid AS reports_patient_uid, reports.patient_id AS reports_patient_id, reports.data_json AS reports_data_json, reports.pdf_path AS reports_pdf_path, reports.created_at AS reports_created_at, reports.updated_at AS reports_updated_at 
+FROM reports 
+WHERE ? = reports.template_id]
+[parameters: (5,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\report_routes.py", line 95, in api_create_template
+    result = report_service.create_template(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\business\services\report_service.py", line 59, in create_template
+    raise DatabaseError(f"فشل إنشاء القالب: {str(e)}")
+application.exceptions.custom_exceptions.DatabaseError: خطأ في قاعدة البيانات: فشل إنشاء القالب: (sqlite3.OperationalError) no such column: reports.patient_id
+[SQL: SELECT reports.id AS reports_id, reports.report_uid AS reports_report_uid, reports.template_id AS reports_template_id, reports.patient_uid AS reports_patient_uid, reports.patient_id AS reports_patient_id, reports.data_json AS reports_data_json, reports.pdf_path AS reports_pdf_path, reports.created_at AS reports_created_at, reports.updated_at AS reports_updated_at 
+FROM reports 
+WHERE ? = reports.template_id]
+[parameters: (5,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+2026-08-05 22:24:04 - __main__ - ERROR - ⏱️ POST /api/templates → 500 (22.18ms) [ID: c1361b03]
+2026-08-05 22:43:04 - infrastructure.database - ERROR - Database initialization failed: Not an executable object: 'PRAGMA foreign_keys = ON'
+2026-08-06 01:32:35 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - 'DataService' object has no attribute 'get_all_patients'
+2026-08-06 01:32:35 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\patient_routes.py", line 32, in get_patients_api
+    patients = data_service.get_all_patients(model_filter)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DataService' object has no attribute 'get_all_patients'
+
+2026-08-06 01:32:35 - __main__ - ERROR - ⏱️ GET /api/patients → 500 (19.66ms) [ID: 75d9f7d3]
+2026-08-06 01:32:37 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - 'DataService' object has no attribute 'get_all_patients'
+2026-08-06 01:32:37 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\patient_routes.py", line 32, in get_patients_api
+    patients = data_service.get_all_patients(model_filter)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DataService' object has no attribute 'get_all_patients'
+
+2026-08-06 01:32:37 - __main__ - ERROR - ⏱️ GET /api/patients → 500 (5.63ms) [ID: edf8e93e]
+2026-08-06 01:32:38 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - 'DataService' object has no attribute 'get_all_patients'
+2026-08-06 01:32:38 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\patient_routes.py", line 32, in get_patients_api
+    patients = data_service.get_all_patients(model_filter)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DataService' object has no attribute 'get_all_patients'
+
+2026-08-06 01:32:38 - __main__ - ERROR - ⏱️ GET /api/patients → 500 (14.41ms) [ID: 68d25b82]
+2026-08-06 01:32:38 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - 'DataService' object has no attribute 'get_all_patients'
+2026-08-06 01:32:38 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\patient_routes.py", line 32, in get_patients_api
+    patients = data_service.get_all_patients(model_filter)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DataService' object has no attribute 'get_all_patients'
+
+2026-08-06 01:32:38 - __main__ - ERROR - ⏱️ GET /api/patients → 500 (17.28ms) [ID: 4f398873]
+2026-08-06 01:32:38 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - 'DataService' object has no attribute 'get_all_patients'
+2026-08-06 01:32:38 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\patient_routes.py", line 32, in get_patients_api
+    patients = data_service.get_all_patients(model_filter)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DataService' object has no attribute 'get_all_patients'
+
+2026-08-06 01:32:38 - __main__ - ERROR - ⏱️ GET /api/patients → 500 (16.73ms) [ID: 558fd814]
+2026-08-06 01:32:39 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - 'DataService' object has no attribute 'get_all_patients'
+2026-08-06 01:32:39 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\patient_routes.py", line 32, in get_patients_api
+    patients = data_service.get_all_patients(model_filter)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DataService' object has no attribute 'get_all_patients'
+
+2026-08-06 01:32:39 - __main__ - ERROR - ⏱️ GET /api/patients → 500 (3.87ms) [ID: 8e5c26be]
+2026-08-06 01:32:40 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - 'DataService' object has no attribute 'get_all_patients'
+2026-08-06 01:32:40 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\patient_routes.py", line 32, in get_patients_api
+    patients = data_service.get_all_patients(model_filter)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DataService' object has no attribute 'get_all_patients'
+
+2026-08-06 01:32:40 - __main__ - ERROR - ⏱️ GET /api/patients → 500 (0.00ms) [ID: a5856576]
+2026-08-06 01:32:42 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - 'DataService' object has no attribute 'get_all_patients'
+2026-08-06 01:32:42 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\patient_routes.py", line 32, in get_patients_api
+    patients = data_service.get_all_patients(model_filter)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DataService' object has no attribute 'get_all_patients'
+
+2026-08-06 01:32:42 - __main__ - ERROR - ⏱️ GET /api/patients → 500 (7.78ms) [ID: c1ce68ed]
+2026-08-06 01:32:45 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - 'DataService' object has no attribute 'get_all_patients'
+2026-08-06 01:32:45 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\patient_routes.py", line 32, in get_patients_api
+    patients = data_service.get_all_patients(model_filter)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DataService' object has no attribute 'get_all_patients'
+
+2026-08-06 01:32:45 - __main__ - ERROR - ⏱️ GET /api/patients → 500 (5.51ms) [ID: 9825843b]
+2026-08-06 01:33:04 - application.exceptions.handlers - ERROR - Exception: INVALID_FILE_TYPE - نوع الملف 'images (5).jfif' غير مسموح. الأنواع المسموحة: .png, .jpg, .jpeg, .bmp, .tiff
+2026-08-06 01:33:04 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\ecg_routes.py", line 49, in predict_ecg_api
+    raise InvalidFileTypeError(
+application.exceptions.custom_exceptions.InvalidFileTypeError: نوع الملف 'images (5).jfif' غير مسموح. الأنواع المسموحة: .png, .jpg, .jpeg, .bmp, .tiff
+
+2026-08-06 01:34:10 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - 'DataService' object has no attribute 'get_all_patients'
+2026-08-06 01:34:10 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\patient_routes.py", line 32, in get_patients_api
+    patients = data_service.get_all_patients(model_filter)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DataService' object has no attribute 'get_all_patients'
+
+2026-08-06 01:34:10 - __main__ - ERROR - ⏱️ GET /api/patients → 500 (17.50ms) [ID: 34ae3ce8]
+2026-08-06 01:34:11 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - 'DataService' object has no attribute 'get_all_patients'
+2026-08-06 01:34:11 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\patient_routes.py", line 32, in get_patients_api
+    patients = data_service.get_all_patients(model_filter)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DataService' object has no attribute 'get_all_patients'
+
+2026-08-06 01:34:11 - __main__ - ERROR - ⏱️ GET /api/patients → 500 (4.16ms) [ID: 4582c114]
+2026-08-06 01:36:09 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - 'DataService' object has no attribute 'get_all_patients'
+2026-08-06 01:36:09 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\patient_routes.py", line 32, in get_patients_api
+    patients = data_service.get_all_patients(model_filter)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DataService' object has no attribute 'get_all_patients'
+
+2026-08-06 01:36:09 - __main__ - ERROR - ⏱️ GET /api/patients → 500 (9.11ms) [ID: 0c90d087]
+2026-08-06 01:40:15 - application.exceptions.handlers - ERROR - Exception: INTERNAL_ERROR - 'DataService' object has no attribute 'get_all_patients'
+2026-08-06 01:40:15 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\patient_routes.py", line 32, in get_patients_api
+    patients = data_service.get_all_patients(model_filter)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DataService' object has no attribute 'get_all_patients'
+
+2026-08-06 01:40:15 - __main__ - ERROR - ⏱️ GET /api/patients → 500 (23.61ms) [ID: 2bc4c345]
+2026-08-06 01:43:48 - application.exceptions.handlers - ERROR - Exception: VALIDATION_ERROR - خطأ في التحقق من البيانات: لا توجد بيانات للتصدير
+2026-08-06 01:43:48 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\patient_routes.py", line 107, in export_patients
+    raise ValidationError("لا توجد بيانات للتصدير")
+application.exceptions.custom_exceptions.ValidationError: خطأ في التحقق من البيانات: لا توجد بيانات للتصدير
+
+2026-08-09 02:08:13 - application.exceptions.handlers - ERROR - Exception: INVALID_FILE_TYPE - نوع الملف 'download.jfif' غير مسموح. الأنواع المسموحة: .png, .jpg, .jpeg, .bmp, .tiff
+2026-08-09 02:08:13 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\ecg_routes.py", line 49, in predict_ecg_api
+    raise InvalidFileTypeError(
+application.exceptions.custom_exceptions.InvalidFileTypeError: نوع الملف 'download.jfif' غير مسموح. الأنواع المسموحة: .png, .jpg, .jpeg, .bmp, .tiff
+
+2026-08-09 02:09:40 - application.exceptions.handlers - ERROR - Exception: INVALID_FILE_TYPE - نوع الملف 'download (7).jfif' غير مسموح. الأنواع المسموحة: .png, .jpg, .jpeg, .bmp, .tiff
+2026-08-09 02:09:40 - application.exceptions.handlers - ERROR - Traceback (most recent call last):
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\AppData\Local\Programs\Python\Python311\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AL HAYTHAM\Documents\CVD_Disease\heart_Flask\application\routes\ecg_routes.py", line 49, in predict_ecg_api
+    raise InvalidFileTypeError(
+application.exceptions.custom_exceptions.InvalidFileTypeError: نوع الملف 'download (7).jfif' غير مسموح. الأنواع المسموحة: .png, .jpg, .jpeg, .bmp, .tiff
+
