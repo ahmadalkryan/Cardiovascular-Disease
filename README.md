@@ -1,5 +1,5 @@
-Link To  Models https://drive.google.com/drive/folders/1Mgve4IwWW5iGVs87ZnW3bW6qm6Dt5L5X?usp=sharing
-# 🫀 HEART_FLASK - نظام تشخيص أمراض القلب بالذكاء الاصطناعي
+
+# Cardiovascular  - نظام تشخيص أمراض القلب بالذكاء الاصطناعي
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.9%2B-blue.svg" alt="Python">
@@ -31,6 +31,42 @@ Link To  Models https://drive.google.com/drive/folders/1Mgve4IwWW5iGVs87ZnW3bW6q
 
 ## 🏗️ الهندسة المعمارية
 
+| الطبقة | الدور | المكونات الرئيسية |
+|--------|-------|-------------------|
+| **🎨 طبقة العرض (Presentation)** | واجهة المستخدم | HTML, CSS, JavaScript, قوالب Jinja2 |
+| **🎯 طبقة التطبيق (Application)** | استقبال الطلبات وتوجيهها | Routes (المسارات)، DTOs، معالجة الاستثناءات |
+| **💼 طبقة الأعمال (Business)** | منطق الأعمال والخدمات | Services، Strategies، Factories |
+| **🏛️ طبقة البنية التحتية (Infrastructure)** | البنية الأساسية | Database Models، Repositories، Logging |
+
+---
+
+## 🚀 البدء السريع
+
+### المتطلبات الأساسية
+- Python 3.9+
+- pip
+- Git (اختياري)
+
+### خطوات التثبيت
+
+```bash
+# 1. استنساخ المشروع
+git clone <repository-url>
+cd HEART_FLASK
+
+# 2. إنشاء بيئة افتراضية
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+venv\Scripts\activate     # Windows
+
+# 3. تثبيت المتطلبات
+pip install -r requirements.txt
+
+# 4. تحميل النماذج
+# قم بتحميل النماذج من Google Drive ووضعها في مجلد storage/models/
+
+# 5. تشغيل التطبيق
+python app.py
 <p align="center">
   <img src="https://via.placeholder.com/800x400/667eea/ffffff?text=Architecture+Diagram" alt="Architecture">
 
