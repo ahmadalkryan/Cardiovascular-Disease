@@ -1,6 +1,4 @@
-
 #  نظام مساعد لتشخيص أمراض القلب باستخدام الذكاء الاصطناعي
-
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.9%2B-blue.svg" alt="Python">
   <img src="https://img.shields.io/badge/Flask-2.0%2B-green.svg" alt="Flask">
